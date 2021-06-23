@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/smadi/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/smadi/static/js/main.c6eea218.chunk.js",
+    "main.js.map": "/smadi/static/js/main.c6eea218.chunk.js.map",
+    "runtime-main.js": "/smadi/static/js/runtime-main.9afa6775.js",
+    "runtime-main.js.map": "/smadi/static/js/runtime-main.9afa6775.js.map",
+    "static/css/2.4c97ca4f.chunk.css": "/smadi/static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.8da52503.chunk.js": "/smadi/static/js/2.8da52503.chunk.js",
+    "static/js/2.8da52503.chunk.js.map": "/smadi/static/js/2.8da52503.chunk.js.map",
+    "static/js/3.3d6ed567.chunk.js": "/smadi/static/js/3.3d6ed567.chunk.js",
+    "static/js/3.3d6ed567.chunk.js.map": "/smadi/static/js/3.3d6ed567.chunk.js.map",
+    "index.html": "/smadi/index.html",
+    "static/css/2.4c97ca4f.chunk.css.map": "/smadi/static/css/2.4c97ca4f.chunk.css.map",
+    "static/css/main.6dea0f05.chunk.css.map": "/smadi/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.8da52503.chunk.js.LICENSE.txt": "/smadi/static/js/2.8da52503.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9afa6775.js",
+    "static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.8da52503.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.c6eea218.chunk.js"
+  ]
+}

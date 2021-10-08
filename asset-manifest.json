@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/masa7tee/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/masa7tee/static/js/main.ee107e9c.chunk.js",
-    "main.js.map": "/masa7tee/static/js/main.ee107e9c.chunk.js.map",
+    "main.js": "/masa7tee/static/js/main.8551cc35.chunk.js",
+    "main.js.map": "/masa7tee/static/js/main.8551cc35.chunk.js.map",
     "runtime-main.js": "/masa7tee/static/js/runtime-main.9a20c160.js",
     "runtime-main.js.map": "/masa7tee/static/js/runtime-main.9a20c160.js.map",
     "static/css/2.4c97ca4f.chunk.css": "/masa7tee/static/css/2.4c97ca4f.chunk.css",
@@ -20,6 +20,6 @@
     "static/css/2.4c97ca4f.chunk.css",
     "static/js/2.b5e7bf02.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.ee107e9c.chunk.js"
+    "static/js/main.8551cc35.chunk.js"
   ]
 }

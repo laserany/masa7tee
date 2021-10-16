@@ -12,7 +12,7 @@ function App() {
       <Switch>
         <Route path='/home' component={HomePage} />
         <Route path='/sign-in' component={SignInPage} />
-        <Route path='/sign-up/:signUpType?' component={SignUpPage} />
+        <Route path='/sign-up' component={SignUpPage} />
         <Route path='/questions' component={SaraQuestionsPage} />
         <Route path='/submitted' component={VerificationEmailPage} />
         <Route path='/safe-space-specifications' component={SafeSpaceSpecificationsPage} />

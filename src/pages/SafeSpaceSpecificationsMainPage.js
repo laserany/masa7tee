@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import FormControl from 'react-bootstrap/FormControl'
-import Masa7teeButton from '../components/Masa7teeButton'
+import Masa7teeButton from '../components/common/Masa7teeButton'
 import Table from 'react-bootstrap/Table'
 import { Link, useLocation } from 'react-router-dom'
-import BlueArrowRight from '../components/BlueArrowRight'
+import BlueArrowRight from '../components/common/BlueArrowRight'
 
 const SafeSpaceSpecificationsMainPage = ({
   safeSpaceNames,

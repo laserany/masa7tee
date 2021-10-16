@@ -2,7 +2,7 @@ import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Masa7teeButton from '../components/Masa7teeButton'
+import Masa7teeButton from '../components/common/Masa7teeButton'
 import { Link } from 'react-router-dom'
 
 const SignInPage = () => {

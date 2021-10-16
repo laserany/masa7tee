@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
-import Masa7teeButton from '../components/Masa7teeButton'
+import Masa7teeButton from '../components/common/Masa7teeButton'
 import Table from 'react-bootstrap/Table'
 import { Link } from 'react-router-dom'
 

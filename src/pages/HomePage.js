@@ -1,18 +1,18 @@
 import React from 'react'
-import Masa7teeButton from '../components/Masa7teeButton'
-import LanguageButton from '../components/LanguageButton'
+import Masa7teeButton from '../components/common/Masa7teeButton'
+import LanguageButton from '../components/home/LanguageButton'
 import Image from 'react-bootstrap/Image'
 import { Link } from 'react-router-dom'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
-import ControlledCarousel from '../components/ControlledCarousel'
-import Who from '../components/Who'
-import What from '../components/What'
-import Connect from '../components/Connect'
+import ControlledCarousel from '../components/home/ControlledCarousel'
+import Who from '../components/home/Who'
+import What from '../components/home/What'
+import Connect from '../components/home/Connect'
 import {LinkContainer} from 'react-router-bootstrap'
-import { Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
 const HomePage = ({match}) => {
   return (
@@ -90,12 +90,12 @@ const HomePage = ({match}) => {
         <Route
     path={`${match.url}`}
     render={({ match: { url } }) => (
-      <>
+      <Switch>
         <Route path={`${url}/`} component={ControlledCarousel} exact />
         <Route path = {`${url}/who`} component={Who} />
           <Route path = {`${url}/what`} component={What} />
           <Route path = {`${url}/connect`} component={Connect} />
-      </>
+          </Switch>
     )}
   />
         </Col>

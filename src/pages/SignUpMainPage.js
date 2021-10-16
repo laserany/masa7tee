@@ -1,8 +1,8 @@
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import BorderlessListGroupItemWithBlueRadioButton from '../components/BorderlessListGroupItemWithBlueRadioButton'
-import BlueArrowRight from '../components/BlueArrowRight'
+import BorderlessListGroupItemWithBlueRadioButton from '../components/signup/BorderlessListGroupItemWithBlueRadioButton'
+import BlueArrowRight from '../components/common/BlueArrowRight'
 import { Link, useLocation } from 'react-router-dom'
 
 const SignUpMainPage = () => {

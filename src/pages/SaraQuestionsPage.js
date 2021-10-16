@@ -2,7 +2,7 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { Link, useLocation } from 'react-router-dom'
-import BlueArrowRight from '../components/BlueArrowRight'
+import BlueArrowRight from '../components/common/BlueArrowRight'
 
 const SaraQuestionsPage = () => {
   const location = useLocation()

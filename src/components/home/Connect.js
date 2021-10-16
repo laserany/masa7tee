@@ -1,11 +1,11 @@
 import React from 'react'
-import contact from './contact.jpg'
+import connect from './connect.jpg'
 import { GrFacebook, GrInstagram } from 'react-icons/gr'
 import ButtonMailto from './ButtonMailto'
 const Connect = () => {
   return (
     <div>
-      <img src={contact} style={{ width: '100%', height: '400px' }} />
+      <img src={connect} alt='' style={{ width: '100%', height: '400px' }} />
       <br></br>
       <br></br>
       <p style={{ textAlign: 'right' }}>

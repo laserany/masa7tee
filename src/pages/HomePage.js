@@ -11,16 +11,17 @@ import ControlledCarousel from '../components/home/ControlledCarousel'
 import Who from '../components/home/Who'
 import What from '../components/home/What'
 import Connect from '../components/home/Connect'
-import {LinkContainer} from 'react-router-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 import { Switch, Route } from 'react-router-dom'
+import logo from '../components/common/logo.png'
 
-const HomePage = ({match}) => {
+const HomePage = ({ match }) => {
   return (
     <>
       <Row className='mt-5'>
         <Col md={4}>
           <Image
-            src='logo.png'
+            src={logo}
             rounded
             style={{ width: '150px', height: '150px' }}
           />
@@ -50,36 +51,36 @@ const HomePage = ({match}) => {
         <Col>
           <Navbar bg='light' variant='light'>
             <Nav className='mr-auto'>
-            <LinkContainer to={`${match.url}/who`}>
-              <Nav.Link>
-                <span>
-                  من نحن؟
-                  <br />
-                  Who are we?
-                </span>
-              </Nav.Link>
+              <LinkContainer to={`${match.url}/who`}>
+                <Nav.Link>
+                  <span>
+                    من نحن؟
+                    <br />
+                    Who are we?
+                  </span>
+                </Nav.Link>
               </LinkContainer>
             </Nav>
             <Nav>
-            <LinkContainer to={`${match.url}/what`}>
-              <Nav.Link>
-                <span>
-                  ماذا نقدم؟
-                  <br />
-                  What we do?
-                </span>
-              </Nav.Link>
+              <LinkContainer to={`${match.url}/what`}>
+                <Nav.Link>
+                  <span>
+                    ماذا نقدم؟
+                    <br />
+                    What we do?
+                  </span>
+                </Nav.Link>
               </LinkContainer>
             </Nav>
             <Nav className='ml-auto'>
               <LinkContainer to={`${match.url}/connect`}>
-              <Nav.Link>
-                <span>
-                  تواصل معنا
-                  <br />
-                  Connect us
-                </span>
-              </Nav.Link>
+                <Nav.Link>
+                  <span>
+                    تواصل معنا
+                    <br />
+                    Connect us
+                  </span>
+                </Nav.Link>
               </LinkContainer>
             </Nav>
           </Navbar>
@@ -87,17 +88,17 @@ const HomePage = ({match}) => {
       </Row>
       <Row>
         <Col>
-        <Route
-    path={`${match.url}`}
-    render={({ match: { url } }) => (
-      <Switch>
-        <Route path={`${url}/`} component={ControlledCarousel} exact />
-        <Route path = {`${url}/who`} component={Who} />
-          <Route path = {`${url}/what`} component={What} />
-          <Route path = {`${url}/connect`} component={Connect} />
-          </Switch>
-    )}
-  />
+          <Route
+            path={`${match.url}`}
+            render={({ match: { url } }) => (
+              <Switch>
+                <Route path={`${url}/`} component={ControlledCarousel} exact />
+                <Route path={`${url}/who`} component={Who} />
+                <Route path={`${url}/what`} component={What} />
+                <Route path={`${url}/connect`} component={Connect} />
+              </Switch>
+            )}
+          />
         </Col>
       </Row>
     </>

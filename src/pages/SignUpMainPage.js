@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col'
 import BorderlessListGroupItemWithBlueRadioButton from '../components/signup/BorderlessListGroupItemWithBlueRadioButton'
 import BlueArrowRight from '../components/common/BlueArrowRight'
 import { Link, useLocation } from 'react-router-dom'
-
+import logo from '../components/common/logo.png'
 const SignUpMainPage = () => {
   const location = useLocation()
   return (
@@ -12,7 +12,7 @@ const SignUpMainPage = () => {
       <Row>
         <Col md={4}></Col>
         <Col md={'auto'}>
-          <img src='logo.png' style={{ paddingLeft: '47px' }} alt=""></img>
+          <img src={logo} style={{ paddingLeft: '47px' }} alt=''></img>
         </Col>
       </Row>
       <Row className='mt-5'>
@@ -32,7 +32,7 @@ const SignUpMainPage = () => {
           <img
             src='organization-icon.jpg'
             style={{ width: '50px', height: '60px', marginLeft: '55px' }}
-            alt=""
+            alt=''
           ></img>
           <BorderlessListGroupItemWithBlueRadioButton href='#i-need-safe-space'>
             i need safe space
@@ -46,7 +46,7 @@ const SignUpMainPage = () => {
           <img
             src='user-icon.jpg'
             style={{ width: '50px', height: '60px', marginLeft: '25px' }}
-            alt=""
+            alt=''
           ></img>
           <BorderlessListGroupItemWithBlueRadioButton href='#person'>
             Person

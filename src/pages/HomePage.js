@@ -20,11 +20,13 @@ const HomePage = ({ match }) => {
     <>
       <Row className='mt-5'>
         <Col md={4}>
-          <Image
-            src={logo}
-            rounded
-            style={{ width: '150px', height: '150px' }}
-          />
+          <Link to={`${match.url}`}>
+            <Image
+              src={logo}
+              rounded
+              style={{ width: '150px', height: '150px' }}
+            />
+          </Link>
         </Col>
         <Col md={6} className='mt-4'>
           <h1>Masa7tee | مساحتي</h1>
@@ -50,7 +52,7 @@ const HomePage = ({ match }) => {
       <Row className='mt-5'>
         <Col>
           <Navbar bg='light' variant='light'>
-            <Nav className='mr-auto'>
+            <Nav className='mr-auto' activeKey='/'>
               <LinkContainer to={`${match.url}/who`}>
                 <Nav.Link>
                   <span>
@@ -61,7 +63,7 @@ const HomePage = ({ match }) => {
                 </Nav.Link>
               </LinkContainer>
             </Nav>
-            <Nav>
+            <Nav activeKey='/'>
               <LinkContainer to={`${match.url}/what`}>
                 <Nav.Link>
                   <span>
@@ -72,7 +74,7 @@ const HomePage = ({ match }) => {
                 </Nav.Link>
               </LinkContainer>
             </Nav>
-            <Nav className='ml-auto'>
+            <Nav className='ml-auto' activeKey='/'>
               <LinkContainer to={`${match.url}/connect`}>
                 <Nav.Link>
                   <span>

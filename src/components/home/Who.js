@@ -1,5 +1,5 @@
 import React from 'react'
-import who from './who.png'
+import who from './who.jpg'
 const Who = () => {
   return (
     <div>

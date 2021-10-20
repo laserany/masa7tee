@@ -1,5 +1,5 @@
 import React from 'react'
-import what from './what.png'
+import what from './what.jpg'
 const What = () => {
   return (
     <div>

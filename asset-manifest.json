@@ -1,29 +1,33 @@
 {
   "files": {
     "main.css": "/masa7tee/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/masa7tee/static/js/main.c58841d2.chunk.js",
-    "main.js.map": "/masa7tee/static/js/main.c58841d2.chunk.js.map",
+    "main.js": "/masa7tee/static/js/main.e584a345.chunk.js",
+    "main.js.map": "/masa7tee/static/js/main.e584a345.chunk.js.map",
     "runtime-main.js": "/masa7tee/static/js/runtime-main.fab8e0f2.js",
     "runtime-main.js.map": "/masa7tee/static/js/runtime-main.fab8e0f2.js.map",
     "static/css/2.081f420c.chunk.css": "/masa7tee/static/css/2.081f420c.chunk.css",
-    "static/js/2.b03b5f68.chunk.js": "/masa7tee/static/js/2.b03b5f68.chunk.js",
-    "static/js/2.b03b5f68.chunk.js.map": "/masa7tee/static/js/2.b03b5f68.chunk.js.map",
+    "static/js/2.10989011.chunk.js": "/masa7tee/static/js/2.10989011.chunk.js",
+    "static/js/2.10989011.chunk.js.map": "/masa7tee/static/js/2.10989011.chunk.js.map",
     "static/js/3.fe72843f.chunk.js": "/masa7tee/static/js/3.fe72843f.chunk.js",
     "static/js/3.fe72843f.chunk.js.map": "/masa7tee/static/js/3.fe72843f.chunk.js.map",
     "index.html": "/masa7tee/index.html",
     "static/css/2.081f420c.chunk.css.map": "/masa7tee/static/css/2.081f420c.chunk.css.map",
     "static/css/main.6dea0f05.chunk.css.map": "/masa7tee/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.b03b5f68.chunk.js.LICENSE.txt": "/masa7tee/static/js/2.b03b5f68.chunk.js.LICENSE.txt",
+    "static/js/2.10989011.chunk.js.LICENSE.txt": "/masa7tee/static/js/2.10989011.chunk.js.LICENSE.txt",
     "static/media/connect.af933df8.jpg": "/masa7tee/static/media/connect.af933df8.jpg",
+    "static/media/first-carousel.db6b018a.jpg": "/masa7tee/static/media/first-carousel.db6b018a.jpg",
+    "static/media/fourth-carousel.b39ad327.jpg": "/masa7tee/static/media/fourth-carousel.b39ad327.jpg",
     "static/media/logo.b887a5b3.png": "/masa7tee/static/media/logo.b887a5b3.png",
+    "static/media/second-carousel.2dd022e2.jpg": "/masa7tee/static/media/second-carousel.2dd022e2.jpg",
+    "static/media/third-carousel.95960184.jpg": "/masa7tee/static/media/third-carousel.95960184.jpg",
     "static/media/what.a8f03b4b.jpg": "/masa7tee/static/media/what.a8f03b4b.jpg",
     "static/media/who.03a57861.jpg": "/masa7tee/static/media/who.03a57861.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.fab8e0f2.js",
     "static/css/2.081f420c.chunk.css",
-    "static/js/2.b03b5f68.chunk.js",
+    "static/js/2.10989011.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.c58841d2.chunk.js"
+    "static/js/main.e584a345.chunk.js"
   ]
 }

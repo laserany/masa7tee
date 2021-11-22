@@ -5,6 +5,7 @@ import BorderlessListGroupItemWithBlueRadioButton from '../components/signup/Bor
 import BlueArrowRight from '../components/common/BlueArrowRight'
 import { Link, useLocation } from 'react-router-dom'
 import logo from '../components/common/logo.png'
+import { masa7teeColor } from '../components/common/constants'
 const SignUpMainPage = () => {
   const location = useLocation()
   return (
@@ -19,7 +20,7 @@ const SignUpMainPage = () => {
         <Col md={4}></Col>
         <Col md={'auto'}>
           <h1
-            style={{ borderStyle: 'solid', borderColor: 'blue' }}
+            style={{ borderStyle: 'solid', borderColor: `${masa7teeColor}` }}
             className='pr-5 pl-5'
           >
             New User

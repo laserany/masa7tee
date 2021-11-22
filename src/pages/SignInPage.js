@@ -4,15 +4,22 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Masa7teeButton from '../components/common/Masa7teeButton'
 import { Link } from 'react-router-dom'
+import { masa7teeColor } from '../components/common/constants'
 
 const SignInPage = () => {
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div
+      style={{
+        textAlign: 'center',
+        borderStyle: 'solid',
+        borderColor: `${masa7teeColor}`,
+      }}
+    >
       <Row className='mt-5'>
         <Col>
           <h1
             style={{
-              backgroundColor: 'orange',
+              backgroundColor: `${masa7teeColor}`,
               display: 'inline',
             }}
           >

@@ -15,20 +15,6 @@ const SafeSpaceSpecificationsMainPage = ({
   const [safeSpaceName, setSafeSpaceName] = useState('')
   return (
     <>
-      <Row>
-        <Col md={4}></Col>
-        <Col md={'auto'}>
-          <h1
-            style={{
-              borderStyle: 'solid',
-              borderRadius: '10px',
-            }}
-            className='pr-5 pl-5'
-          >
-            Safe Space Specifications
-          </h1>
-        </Col>
-      </Row>
       <Row className='mt-5'>
         <Col md={3}>
           <FormControl

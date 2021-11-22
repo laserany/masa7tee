@@ -10,7 +10,6 @@ import FormRadioOptionWithValidation from '../components/signup/FormRadioOptionW
 import FormRadioOtherOption from '../components/signup/FormRadioOtherOption'
 import { useHistory } from 'react-router-dom'
 import BlueArrowRightButton from '../components/signup/BlueArrowRightButton'
-
 const schema = yup.object().shape({
   name: yup.string().required('This is a required question'),
   date: yup.date().required('This is a required question'),

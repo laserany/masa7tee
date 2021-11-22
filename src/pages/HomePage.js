@@ -55,33 +55,21 @@ const HomePage = ({ match }) => {
             <Nav className='mr-auto' activeKey='/'>
               <LinkContainer to={`${match.url}/who`}>
                 <Nav.Link>
-                  <span>
-                    من نحن؟
-                    <br />
-                    Who are we?
-                  </span>
+                  <span>من نحن؟</span>
                 </Nav.Link>
               </LinkContainer>
             </Nav>
             <Nav activeKey='/'>
               <LinkContainer to={`${match.url}/what`}>
                 <Nav.Link>
-                  <span>
-                    ماذا نقدم؟
-                    <br />
-                    What we do?
-                  </span>
+                  <span>ماذا نقدم؟</span>
                 </Nav.Link>
               </LinkContainer>
             </Nav>
             <Nav className='ml-auto' activeKey='/'>
               <LinkContainer to={`${match.url}/connect`}>
                 <Nav.Link>
-                  <span>
-                    تواصل معنا
-                    <br />
-                    Connect us
-                  </span>
+                  <span>تواصل معنا</span>
                 </Nav.Link>
               </LinkContainer>
             </Nav>

@@ -22,7 +22,10 @@ const HomePage = ({ match }) => {
       <style type='text/css'>
         {`
 .nav-link {
-  border: 5px solid ${masa7teeColor};
+  border: 3px solid ${masa7teeColor};
+}
+.active {
+background-color: ${masa7teeColor} !important;
 }
     `}
       </style>

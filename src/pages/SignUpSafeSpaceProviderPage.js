@@ -319,7 +319,7 @@ function SignUpSafeSpaceProviderPage() {
           </Form.Row>
           <Form.Row>
             <Form.Group as={Col} md='4' controlId='validationFormikLogistic'>
-              <Form.Label>مجال العمل</Form.Label>
+              <Form.Label>اللوجستيات المتوفرة</Form.Label>
               <FormCheckboxOption
                 name='logistic'
                 value='تدفئة'

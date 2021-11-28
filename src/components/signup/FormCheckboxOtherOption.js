@@ -1,5 +1,6 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
+import { otherInputStyling } from '../common/constants'
 
 const FormCheckboxOtherOption = ({
   name,
@@ -25,11 +26,7 @@ const FormCheckboxOtherOption = ({
 
       <Form.Check.Label style={{ paddingLeft: '8px' }}>Other:</Form.Check.Label>
       <Form.Check.Input
-        style={{
-          marginLeft: '10px',
-          marginTop: '-2px',
-          borderStyle: 'none none solid none',
-        }}
+        style={otherInputStyling}
         type='text'
         name='checkbox_other'
         value={value}

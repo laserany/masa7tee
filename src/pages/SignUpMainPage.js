@@ -1,11 +1,12 @@
 import React from 'react'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import BorderlessListGroupItemWithBlueRadioButton from '../components/signup/BorderlessListGroupItemWithBlueRadioButton'
+import BorderedListGroupItemWithBlueRadioButton from '../components/signup/BorderedListGroupItemWithBlueRadioButton'
 import BlueArrowRight from '../components/common/BlueArrowRight'
 import { Link, useLocation } from 'react-router-dom'
 import logo from '../components/common/logo.png'
 import { masa7teeColor } from '../components/common/constants'
+import ListGroup from 'react-bootstrap/ListGroup'
 const SignUpMainPage = () => {
   const location = useLocation()
   return (
@@ -27,33 +28,41 @@ const SignUpMainPage = () => {
           </h1>
         </Col>
       </Row>
-      <Row className='mt-5'>
-        <Col md={2} />
-        <Col md={4}>
-          <img
-            src='organization-icon.jpg'
-            style={{ width: '50px', height: '60px', marginLeft: '55px' }}
-            alt=''
-          ></img>
-          <BorderlessListGroupItemWithBlueRadioButton href='#i-need-safe-space'>
-            i need safe space
-          </BorderlessListGroupItemWithBlueRadioButton>
-          <BorderlessListGroupItemWithBlueRadioButton href='#safe-space-provider'>
-            safe space provider
-          </BorderlessListGroupItemWithBlueRadioButton>
-        </Col>
-        <Col md={2} />
-        <Col md={4}>
-          <img
-            src='user-icon.jpg'
-            style={{ width: '50px', height: '60px', marginLeft: '25px' }}
-            alt=''
-          ></img>
-          <BorderlessListGroupItemWithBlueRadioButton href='#person'>
-            Person
-          </BorderlessListGroupItemWithBlueRadioButton>
-        </Col>
-      </Row>
+      <ListGroup>
+        <Row className='mt-5'>
+          <Col md={2} />
+          <Col md={4}>
+            <img
+              src='organization-icon.jpg'
+              style={{ width: '50px', height: '60px', marginLeft: '55px' }}
+              alt=''
+            ></img>
+            <br />
+            <br />
+            <BorderedListGroupItemWithBlueRadioButton href='#i-need-safe-space'>
+              i need safe space
+            </BorderedListGroupItemWithBlueRadioButton>
+            <br />
+
+            <BorderedListGroupItemWithBlueRadioButton href='#safe-space-provider'>
+              safe space provider
+            </BorderedListGroupItemWithBlueRadioButton>
+          </Col>
+          <Col md={2} />
+          <Col md={4}>
+            <img
+              src='user-icon.jpg'
+              style={{ width: '50px', height: '60px', marginLeft: '25px' }}
+              alt=''
+            ></img>
+            <br />
+            <br />
+            <BorderedListGroupItemWithBlueRadioButton href='#person'>
+              Person
+            </BorderedListGroupItemWithBlueRadioButton>
+          </Col>
+        </Row>
+      </ListGroup>
       <Row className='mt-3'>
         <Col md={10}></Col>
         <Col>

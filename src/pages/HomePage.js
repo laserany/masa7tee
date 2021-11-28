@@ -14,10 +14,18 @@ import Connect from '../components/home/Connect'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Switch, Route } from 'react-router-dom'
 import logo from '../components/common/logo.png'
+import { masa7teeColor } from '../components/common/constants'
 
 const HomePage = ({ match }) => {
   return (
     <>
+      <style type='text/css'>
+        {`
+.nav-link {
+  border: 5px solid ${masa7teeColor};
+}
+    `}
+      </style>
       <Row className='mt-5'>
         <Col md={4}>
           <Link to={`${match.url}`}>

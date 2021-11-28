@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/masa7tee/static/js/main.96677af3.chunk.js",
-    "main.js.map": "/masa7tee/static/js/main.96677af3.chunk.js.map",
+    "main.js": "/masa7tee/static/js/main.1cc70ace.chunk.js",
+    "main.js.map": "/masa7tee/static/js/main.1cc70ace.chunk.js.map",
     "runtime-main.js": "/masa7tee/static/js/runtime-main.19a8d786.js",
     "runtime-main.js.map": "/masa7tee/static/js/runtime-main.19a8d786.js.map",
     "static/css/2.081f420c.chunk.css": "/masa7tee/static/css/2.081f420c.chunk.css",
@@ -25,6 +25,6 @@
     "static/js/runtime-main.19a8d786.js",
     "static/css/2.081f420c.chunk.css",
     "static/js/2.c619de48.chunk.js",
-    "static/js/main.96677af3.chunk.js"
+    "static/js/main.1cc70ace.chunk.js"
   ]
 }

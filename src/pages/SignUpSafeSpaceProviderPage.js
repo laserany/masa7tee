@@ -27,7 +27,11 @@ const schema = yup.object().shape({
     .required('This is a required question'),
   field: yup.string().required('This is a required question'),
   safeSpaceNumber: yup.string().required('This is a required question'),
-  capacity: yup.string().required('This is a required question'),
+  capacity: yup
+    .number()
+    .typeError('Field must be a positive number')
+    .positive()
+    .required('This is a required question'),
   time: yup.string().required('This is a required question'),
   logistic: yup.array().min(1, 'This is a required question'),
   radio_other: yup.string().when('field', {
@@ -38,6 +42,7 @@ const schema = yup.object().shape({
     is: (logistic) => logistic.length === 1 && logistic[0] === 'checkbox_other',
     then: yup.string().required('This is a required question'),
   }),
+  covid: yup.string().required('This is a required question'),
 })
 
 function SignUpSafeSpaceProviderPage() {
@@ -60,6 +65,7 @@ function SignUpSafeSpaceProviderPage() {
         logistic: [],
         radio_other: '',
         checkbox_other: '',
+        covid: '',
       }}
     >
       {({
@@ -359,6 +365,20 @@ function SignUpSafeSpaceProviderPage() {
                   (!!errors.logistic || !!errors.checkbox_other)
                 }
                 error={errors.logistic || errors.checkbox_other}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} md='4' controlId='validationFormikCovid'>
+              <FormTextBox
+                label='ما هي اشتراطات السلامة العامة؟'
+                name='covid'
+                value={values.covid}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={touched.covid && !errors.covid}
+                isInvalid={touched.covid && !!errors.covid}
+                error={errors.covid}
               />
             </Form.Group>
           </Form.Row>

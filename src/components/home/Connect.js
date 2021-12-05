@@ -8,25 +8,27 @@ const Connect = () => {
       <img src={connect} alt='' style={{ width: '100%', height: '400px' }} />
       <br></br>
       <br></br>
-      <p style={{ textAlign: 'right' }}>
-        <ButtonMailto
-          label='masa7tee@gmail.com'
-          mailto='mailto:masa7tee@gmail.com'
-        />
-        <span>البريد الالكتروني</span>
-      </p>
-      <p style={{ textAlign: 'right' }}>
-        <a href='https://www.facebook.com/Masa7tee'>
-          <GrFacebook /> https://www.facebook.com/Masa7tee
-        </a>
+      <div style={{ textAlign: 'right' }}>
+        البريد الالكتروني
+        <p>
+          <ButtonMailto
+            label='masa7tee@gmail.com'
+            mailto='mailto:masa7tee@gmail.com'
+          />
+        </p>
         عن طريق صفحة الفيسبوك
-      </p>
-      <p style={{ textAlign: 'right' }}>
-        <a href='https://www.instagram.com/masa7tee'>
-          <GrInstagram /> https://www.instagram.com/masa7tee
-        </a>
+        <p>
+          <a href='https://www.facebook.com/Masa7tee'>
+            <GrFacebook /> https://www.facebook.com/Masa7tee
+          </a>
+        </p>
         عن طريق صفحة الإنستغرام
-      </p>
+        <p>
+          <a href='https://www.instagram.com/masa7tee'>
+            <GrInstagram /> https://www.instagram.com/masa7tee
+          </a>
+        </p>
+      </div>
     </div>
   )
 }

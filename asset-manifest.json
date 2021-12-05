@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/masa7tee/static/js/main.1cc70ace.chunk.js",
-    "main.js.map": "/masa7tee/static/js/main.1cc70ace.chunk.js.map",
+    "main.js": "/masa7tee/static/js/main.a6dc03f2.chunk.js",
+    "main.js.map": "/masa7tee/static/js/main.a6dc03f2.chunk.js.map",
     "runtime-main.js": "/masa7tee/static/js/runtime-main.19a8d786.js",
     "runtime-main.js.map": "/masa7tee/static/js/runtime-main.19a8d786.js.map",
     "static/css/2.081f420c.chunk.css": "/masa7tee/static/css/2.081f420c.chunk.css",
-    "static/js/2.c619de48.chunk.js": "/masa7tee/static/js/2.c619de48.chunk.js",
-    "static/js/2.c619de48.chunk.js.map": "/masa7tee/static/js/2.c619de48.chunk.js.map",
+    "static/js/2.f5e41f05.chunk.js": "/masa7tee/static/js/2.f5e41f05.chunk.js",
+    "static/js/2.f5e41f05.chunk.js.map": "/masa7tee/static/js/2.f5e41f05.chunk.js.map",
     "static/js/3.13c43858.chunk.js": "/masa7tee/static/js/3.13c43858.chunk.js",
     "static/js/3.13c43858.chunk.js.map": "/masa7tee/static/js/3.13c43858.chunk.js.map",
     "index.html": "/masa7tee/index.html",
     "static/css/2.081f420c.chunk.css.map": "/masa7tee/static/css/2.081f420c.chunk.css.map",
-    "static/js/2.c619de48.chunk.js.LICENSE.txt": "/masa7tee/static/js/2.c619de48.chunk.js.LICENSE.txt",
+    "static/js/2.f5e41f05.chunk.js.LICENSE.txt": "/masa7tee/static/js/2.f5e41f05.chunk.js.LICENSE.txt",
     "static/media/connect.af933df8.jpg": "/masa7tee/static/media/connect.af933df8.jpg",
     "static/media/first-carousel.db6b018a.jpg": "/masa7tee/static/media/first-carousel.db6b018a.jpg",
     "static/media/fourth-carousel.b39ad327.jpg": "/masa7tee/static/media/fourth-carousel.b39ad327.jpg",
@@ -24,7 +24,7 @@
   "entrypoints": [
     "static/js/runtime-main.19a8d786.js",
     "static/css/2.081f420c.chunk.css",
-    "static/js/2.c619de48.chunk.js",
-    "static/js/main.1cc70ace.chunk.js"
+    "static/js/2.f5e41f05.chunk.js",
+    "static/js/main.a6dc03f2.chunk.js"
   ]
 }

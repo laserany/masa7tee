@@ -54,6 +54,11 @@ background-color: ${masa7teeColor} !important;
                 Sign up
               </Masa7teeButton>
             </Link>
+            <Link to='/halls'>
+              <Masa7teeButton className='btn btn-primary mr-2 mb-2'>
+                Halls
+              </Masa7teeButton>
+            </Link>
           </div>
         </Col>
         <Col md={1} className='mt-5'>

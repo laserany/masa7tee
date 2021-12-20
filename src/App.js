@@ -6,6 +6,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import SaraQuestionsPage from './pages/SaraQuestionsPage'
 import SafeSpaceSpecificationsPage from './pages/SafeSpaceSpecificationsPage'
 import HomePage from './pages/HomePage'
+import HallsPage from './pages/HallsPage.js'
 function App() {
   return (
     <Container>
@@ -15,8 +16,12 @@ function App() {
         <Route path='/sign-up' component={SignUpPage} />
         <Route path='/questions' component={SaraQuestionsPage} />
         <Route path='/submitted' component={VerificationEmailPage} />
-        <Route path='/safe-space-specifications' component={SafeSpaceSpecificationsPage} />
-        <Redirect to="/home" />
+        <Route
+          path='/safe-space-specifications'
+          component={SafeSpaceSpecificationsPage}
+        />
+        <Route path='/halls' component={HallsPage} />
+        <Redirect to='/home' />
       </Switch>
     </Container>
   )

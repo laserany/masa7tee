@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import Carousel from 'react-bootstrap/Carousel'
 import CarouselImage from './CarouselImage'
-import firstCarousel from './first-carousel.jpg'
-import secondCarousel from './second-carousel.jpg'
-import thirdCarousel from './third-carousel.jpg'
-import fourthCarousel from './fourth-carousel.jpg'
+import hall1 from '../halls/hall1.png'
+import hall2 from '../halls/hall2.png'
+import hall3 from '../halls/hall3.png'
+import hall4 from '../halls/hall4.png'
 const ControlledCarousel = () => {
   const [index, setIndex] = useState(0)
 
@@ -24,16 +24,16 @@ const ControlledCarousel = () => {
       }}
     >
       <Carousel.Item interval={1000}>
-        <CarouselImage src={firstCarousel} alt='First Carousel' />
+        <CarouselImage src={hall1} alt='Hall 1' />
       </Carousel.Item>
       <Carousel.Item interval={1000}>
-        <CarouselImage src={secondCarousel} alt='Second Carousel' />
+        <CarouselImage src={hall2} alt='Hall 2' />
       </Carousel.Item>
       <Carousel.Item interval={1000}>
-        <CarouselImage src={thirdCarousel} alt='Third Carousel' />
+        <CarouselImage src={hall3} alt='Hall 3' />
       </Carousel.Item>
       <Carousel.Item interval={1000}>
-        <CarouselImage src={fourthCarousel} alt='Third Carousel' />
+        <CarouselImage src={hall4} alt='Hall 4' />
       </Carousel.Item>
     </Carousel>
   )

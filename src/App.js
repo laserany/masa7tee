@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import SaraQuestionsPage from './pages/SaraQuestionsPage'
 import SafeSpaceSpecificationsPage from './pages/SafeSpaceSpecificationsPage'
 import HomePage from './pages/HomePage'
-import HallsPage from './pages/HallsPage.js'
+import BookHallsPage from './pages/BookHallsPage.js'
 function App() {
   return (
     <Container>
@@ -20,7 +20,7 @@ function App() {
           path='/safe-space-specifications'
           component={SafeSpaceSpecificationsPage}
         />
-        <Route path='/halls' component={HallsPage} />
+        <Route path='/book-halls' component={BookHallsPage} />
         <Redirect to='/home' />
       </Switch>
     </Container>

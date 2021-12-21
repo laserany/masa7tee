@@ -12,12 +12,17 @@ const Masa7teeButton = (props) => {
       color: black;
       border-color: white;
       box-shadow: 0px 0px 10px 4px rgba(0,0,0,0.3);
-      height: 38px;
-      width: 83px;
     }
     `}
       </style>
-      <Button variant='masa7tee' {...props}>
+      <Button
+        variant='masa7tee'
+        style={{
+          width: props.width ? props.width : '83px',
+          height: props.height ? props.height : '38px',
+        }}
+        {...props}
+      >
         {props.children}
       </Button>
     </>

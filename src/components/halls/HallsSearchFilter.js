@@ -6,7 +6,10 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Masa7teeButton from '../common/Masa7teeButton'
 
-function HallsSearchFilter() {
+function HallsSearchFilter({ setLocation, setCapacity, setName }) {
+  const handleSubmit = () => {
+    console.log('hello')
+  }
   return (
     <header className='App-header'>
       <Container fluid className='p-3'>
@@ -29,19 +32,23 @@ function HallsSearchFilter() {
                         </svg>
                       </InputGroup.Text>
                     </InputGroup.Prepend>
-                    <Form.Control as='select' id='inlineFormCustomSelect'>
+                    <Form.Control
+                      as='select'
+                      id='location'
+                      onChange={(e) => setLocation(e.target.value)}
+                    >
                       <option value='0'>الزرقاء</option>
                       <option value='1'>عمان</option>
                       <option value='2'>إربد</option>
                       <option value='3'>البلقاء</option>
-                      <option value='0'>جرش</option>
-                      <option value='1'>عجلون</option>
-                      <option value='2'>المفرق</option>
-                      <option value='3'>الطفيلة</option>
-                      <option value='0'>مأدبا</option>
-                      <option value='1'>الكرك</option>
-                      <option value='2'>معان</option>
-                      <option value='3'>العقبة</option>
+                      <option value='4'>جرش</option>
+                      <option value='5'>عجلون</option>
+                      <option value='6'>المفرق</option>
+                      <option value='7'>الطفيلة</option>
+                      <option value='8'>مأدبا</option>
+                      <option value='9'>الكرك</option>
+                      <option value='10'>معان</option>
+                      <option value='11'>العقبة</option>
                     </Form.Control>
                   </InputGroup>
                 </Col>
@@ -79,7 +86,11 @@ function HallsSearchFilter() {
                         </svg>
                       </InputGroup.Text>
                     </InputGroup.Prepend>
-                    <Form.Control as='select' id='inlineFormCustomSelect'>
+                    <Form.Control
+                      as='select'
+                      id='capacity'
+                      onChange={(e) => setCapacity(e.target.value)}
+                    >
                       <option value='0'>&le; 50</option>
                       <option value='1'>&gt; 50 and &lt; 100</option>
                       <option value='2'>&ge; 100</option>
@@ -87,10 +98,14 @@ function HallsSearchFilter() {
                   </InputGroup>
                 </Col>
                 <Col md={2}>
-                  <Form.Control placeholder='اسم القاعة' />
+                  <Form.Control
+                    placeholder='اسم القاعة'
+                    id='name'
+                    onChange={(e) => setName(e.target.value)}
+                  />
                 </Col>
                 <Col md={1}>
-                  <Masa7teeButton>
+                  <Masa7teeButton onClick={handleSubmit}>
                     <svg width='15px' height='15px'>
                       <path d='M11.618 9.897l4.224 4.212c.092.09.1.23.02.312l-1.464 1.46c-.08.08-.222.072-.314-.02L9.868 11.66M6.486 10.9c-2.42 0-4.38-1.955-4.38-4.367 0-2.413 1.96-4.37 4.38-4.37s4.38 1.957 4.38 4.37c0 2.412-1.96 4.368-4.38 4.368m0-10.834C2.904.066 0 2.96 0 6.533 0 10.105 2.904 13 6.486 13s6.487-2.895 6.487-6.467c0-3.572-2.905-6.467-6.487-6.467 '></path>
                     </svg>

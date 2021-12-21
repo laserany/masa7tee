@@ -7,6 +7,8 @@ import { Link, useLocation } from 'react-router-dom'
 import logo from '../components/common/logo.png'
 import { masa7teeColor } from '../components/common/constants'
 import ListGroup from 'react-bootstrap/ListGroup'
+import person from '../components/common/person.jpg'
+import organization from '../components/common/organization.jpg'
 const SignUpMainPage = () => {
   const location = useLocation()
   return (
@@ -33,7 +35,7 @@ const SignUpMainPage = () => {
           <Col md={2} />
           <Col md={4}>
             <img
-              src='organization-icon.jpg'
+              src={organization}
               style={{ width: '50px', height: '60px', marginLeft: '55px' }}
               alt=''
             ></img>
@@ -51,7 +53,7 @@ const SignUpMainPage = () => {
           <Col md={2} />
           <Col md={4}>
             <img
-              src='user-icon.jpg'
+              src={person}
               style={{ width: '50px', height: '60px', marginLeft: '25px' }}
               alt=''
             ></img>

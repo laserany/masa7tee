@@ -12,10 +12,41 @@ const BookHallsPage = () => {
   const [name, setName] = useState()
   let cardGroups = []
   let cards = []
-  for (let i = 0; i < hallsSpec.length; i++) {
-    let hallSpec = hallsSpec[i]
+  let filteredHallsSpec
+  filteredHallsSpec =
+    location === undefined || location === 'كل المحافظات'
+      ? hallsSpec
+      : hallsSpec.filter((hallSpec) => hallSpec.location === location)
+
+  filteredHallsSpec =
+    capacity === undefined || capacity === 'كل السعات'
+      ? filteredHallsSpec
+      : filteredHallsSpec.filter((hallSpec) => {
+          switch (capacity) {
+            case '0':
+              return (
+                Number(hallSpec.capacity) <= 50 ||
+                isNaN(Number(hallSpec.capacity))
+              )
+            case '1':
+              return (
+                Number(hallSpec.capacity) > 50 &&
+                Number(hallSpec.capacity < 100)
+              )
+            case '2':
+              return Number(hallSpec.capacity >= 100)
+            default:
+              return hallSpec
+          }
+        })
+  filteredHallsSpec =
+    name === undefined
+      ? filteredHallsSpec
+      : filteredHallsSpec.filter((hallSpec) => hallSpec.name.includes(name))
+  for (let i = 0; i < filteredHallsSpec.length; i++) {
+    let hallSpec = filteredHallsSpec[i]
     cards.push(
-      <Card>
+      <Card key={i}>
         <Card.Img variant='top' src={hallSpec.image} />
         <Card.Body>
           <Card.Title>قاعة {hallSpec.name}</Card.Title>
@@ -34,7 +65,7 @@ const BookHallsPage = () => {
   }
   let card_chunks = array_chunks(cards, 3)
   for (let i = 0; i < card_chunks.length; i++) {
-    cardGroups.push(<CardGroup>{card_chunks[i]}</CardGroup>)
+    cardGroups.push(<CardGroup key={i}>{card_chunks[i]}</CardGroup>)
   }
 
   return (

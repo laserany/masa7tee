@@ -1,9 +1,10 @@
 import React from 'react'
 import what from './what.jpg'
+import { homeImageStyling } from '../common/constants'
 const What = () => {
   return (
     <div>
-      <img src={what} alt='' style={{ width: '100%', height: '400px' }} />
+      <img src={what} alt='' style={homeImageStyling} />
       <br></br>
       <br></br>
       <p style={{ textAlign: 'right' }}>

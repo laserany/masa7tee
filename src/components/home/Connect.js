@@ -2,10 +2,11 @@ import React from 'react'
 import connect from './connect.jpg'
 import { GrFacebook, GrInstagram } from 'react-icons/gr'
 import ButtonMailto from './ButtonMailto'
+import { homeImageStyling } from '../common/constants'
 const Connect = () => {
   return (
     <div>
-      <img src={connect} alt='' style={{ width: '100%', height: '400px' }} />
+      <img src={connect} alt='' style={homeImageStyling} />
       <br></br>
       <br></br>
       <div style={{ textAlign: 'right' }}>

@@ -5,6 +5,7 @@ import hall1 from '../halls/hall1.png'
 import hall2 from '../halls/hall2.png'
 import hall3 from '../halls/hall3.png'
 import hall4 from '../halls/hall4.png'
+import { homeImageStyling } from '../common/constants'
 const ControlledCarousel = () => {
   const [index, setIndex] = useState(0)
 
@@ -19,8 +20,7 @@ const ControlledCarousel = () => {
       style={{
         backgroundImage: "url('carousel-background-arfa-2.jpg')",
         backgroundSize: '100% 400px',
-        width: '100%',
-        height: '400px',
+        ...homeImageStyling,
       }}
     >
       <Carousel.Item interval={1000}>

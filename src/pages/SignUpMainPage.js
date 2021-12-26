@@ -36,7 +36,7 @@ const SignUpMainPage = () => {
           <Col md={4}>
             <img
               src={organization}
-              style={{ width: '50px', height: '60px', marginLeft: '55px' }}
+              style={{ width: '50px', height: '60px', marginLeft: '25px' }}
               alt=''
             ></img>
             <br />

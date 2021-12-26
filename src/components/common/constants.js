@@ -9,6 +9,12 @@ export const otherInputStyling = {
   border: '1px solid #d4d9de',
   borderRadius: '3px',
 }
+export const homeImageStyling = {
+  margin: 'auto',
+  display: 'block',
+  width: '800px',
+  height: '400px',
+}
 export const hall1Spec = {
   name: 'سارة',
   price: '99999',

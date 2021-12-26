@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import what from './what.jpg'
 import { homeImageStyling } from '../common/constants'
+import { ImageWidthContext } from '../../pages/HomePage'
 const What = () => {
+  const imageWidth = useContext(ImageWidthContext)
   return (
     <div>
-      <img src={what} alt='' style={homeImageStyling} />
+      <img
+        src={what}
+        alt=''
+        style={{ ...homeImageStyling, width: imageWidth }}
+      />
       <br></br>
       <br></br>
       <p style={{ textAlign: 'right' }}>

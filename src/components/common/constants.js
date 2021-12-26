@@ -12,7 +12,6 @@ export const otherInputStyling = {
 export const homeImageStyling = {
   margin: 'auto',
   display: 'block',
-  width: '800px',
   height: '400px',
 }
 export const hall1Spec = {

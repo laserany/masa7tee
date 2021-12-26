@@ -15,8 +15,12 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Switch, Route } from 'react-router-dom'
 import logo from '../components/common/logo.png'
 import { masa7teeColor } from '../components/common/constants'
+import { useMediaQuery } from 'react-responsive'
 
+export const ImageWidthContext = React.createContext()
 const HomePage = ({ match }) => {
+  const isLaptop = useMediaQuery({ query: '(min-width: 768px)' })
+  const imageWidth = isLaptop ? '80%' : '115%'
   return (
     <>
       <style type='text/css'>
@@ -70,7 +74,11 @@ background-color: ${masa7teeColor} !important;
       </Row>
       <Row className='mt-5'>
         <Col>
-          <Navbar bg='light' variant='light'>
+          <Navbar
+            bg='light'
+            variant='light'
+            style={{ width: imageWidth, margin: 'auto' }}
+          >
             <Nav className='mr-auto' activeKey='/'>
               <LinkContainer to={`${match.url}/who`}>
                 <Nav.Link>
@@ -97,17 +105,23 @@ background-color: ${masa7teeColor} !important;
       </Row>
       <Row>
         <Col>
-          <Route
-            path={`${match.url}`}
-            render={({ match: { url } }) => (
-              <Switch>
-                <Route path={`${url}/`} component={ControlledCarousel} exact />
-                <Route path={`${url}/who`} component={Who} />
-                <Route path={`${url}/what`} component={What} />
-                <Route path={`${url}/connect`} component={Connect} />
-              </Switch>
-            )}
-          />
+          <ImageWidthContext.Provider value={imageWidth}>
+            <Route
+              path={`${match.url}`}
+              render={({ match: { url } }) => (
+                <Switch>
+                  <Route
+                    path={`${url}/`}
+                    component={ControlledCarousel}
+                    exact
+                  />
+                  <Route path={`${url}/who`} component={Who} />
+                  <Route path={`${url}/what`} component={What} />
+                  <Route path={`${url}/connect`} component={Connect} />
+                </Switch>
+              )}
+            />
+          </ImageWidthContext.Provider>
         </Col>
       </Row>
     </>

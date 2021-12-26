@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import connect from './connect.jpg'
 import { GrFacebook, GrInstagram } from 'react-icons/gr'
 import ButtonMailto from './ButtonMailto'
 import { homeImageStyling } from '../common/constants'
+import { ImageWidthContext } from '../../pages/HomePage'
 const Connect = () => {
+  const imageWidth = useContext(ImageWidthContext)
   return (
     <div>
-      <img src={connect} alt='' style={homeImageStyling} />
+      <img
+        src={connect}
+        alt=''
+        style={{ ...homeImageStyling, width: imageWidth }}
+      />
       <br></br>
       <br></br>
       <div style={{ textAlign: 'right' }}>

@@ -3,7 +3,7 @@ import CardGroup from 'react-bootstrap/CardGroup'
 import Card from 'react-bootstrap/Card'
 import Masa7teeButton from '../components/common/Masa7teeButton'
 import HallsSearchFilter from '../components/halls/HallsSearchFilter'
-import { hallsSpec } from '../components/common/constants'
+import { arabicTextStyling, hallsSpec } from '../components/common/constants'
 import { array_chunks } from '../components/common/utils'
 import { useState } from 'react'
 const BookHallsPage = () => {
@@ -69,7 +69,7 @@ const BookHallsPage = () => {
   }
 
   return (
-    <div style={{ textAlign: 'right' }}>
+    <div style={arabicTextStyling}>
       <HallsSearchFilter
         setLocation={setLocation}
         setCapacity={setCapacity}

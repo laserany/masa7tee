@@ -14,6 +14,11 @@ export const homeImageStyling = {
   display: 'block',
   height: '400px',
 }
+
+export const arabicTextStyling = {
+  textAlign: 'right',
+  direction: 'rtl',
+}
 export const hall1Spec = {
   name: 'سارة',
   price: '99999',

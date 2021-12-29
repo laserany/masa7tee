@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import connect from './connect.jpg'
 import { GrFacebook, GrInstagram } from 'react-icons/gr'
 import ButtonMailto from './ButtonMailto'
-import { homeImageStyling } from '../common/constants'
+import { arabicTextStyling, homeImageStyling } from '../common/constants'
 import { ImageWidthContext } from '../../pages/HomePage'
 const Connect = () => {
   const imageWidth = useContext(ImageWidthContext)
@@ -15,7 +15,7 @@ const Connect = () => {
       />
       <br></br>
       <br></br>
-      <div style={{ textAlign: 'right' }}>
+      <div style={arabicTextStyling}>
         البريد الالكتروني
         <p>
           <ButtonMailto

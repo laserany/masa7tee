@@ -4,7 +4,10 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Masa7teeButton from '../components/common/Masa7teeButton'
 import { Link } from 'react-router-dom'
-import { masa7teeColor } from '../components/common/constants'
+import {
+  arabicTextStyling,
+  masa7teeColor,
+} from '../components/common/constants'
 
 const SignInPage = () => {
   return (
@@ -40,11 +43,12 @@ const SignInPage = () => {
                 alignItems: 'center',
               }}
             >
-              <Form.Label column sm={2}>
-                Username:
-              </Form.Label>
               <Col sm={7}>
-                <Form.Control type='text' />
+                <Form.Control
+                  type='text'
+                  placeholder='البريد الالكتروني'
+                  style={arabicTextStyling}
+                />
               </Col>
             </Form.Group>
 
@@ -58,11 +62,12 @@ const SignInPage = () => {
                 alignItems: 'center',
               }}
             >
-              <Form.Label column sm={2}>
-                Password:
-              </Form.Label>
               <Col sm={7}>
-                <Form.Control type='password' />
+                <Form.Control
+                  type='password'
+                  placeholder='كلمة السر'
+                  style={arabicTextStyling}
+                />
               </Col>
             </Form.Group>
             <Form.Group as={Row} className='mb-3'>

@@ -10,22 +10,23 @@ import BlueArrowRightButton from '../components/signup/BlueArrowRightButton'
 import { useHistory } from 'react-router-dom'
 
 const schema = yup.object().shape({
-  institutionName: yup.string().required('This is a required question'),
-  representativeName: yup.string().required('This is a required question'),
-  institutionPhone: yup.string().required('This is a required question'),
-  representativePhone: yup.string().required('This is a required question'),
+  institutionName: yup.string().required('This is a required field'),
+  representativeName: yup.string().required('This is a required field'),
+  institutionPhone: yup.string().required('This is a required field'),
+  representativePhone: yup.string().required('This is a required field'),
   institutionEmail: yup
     .string()
     .email('Please enter a valid email')
-    .required('This is a required question'),
+    .required('This is a required field'),
+  password: yup.string().required('this is a required field'),
   representativeEmail: yup
     .string()
     .email('Please enter a valid email')
-    .required('This is a required question'),
-  field: yup.string().required('This is a required question'),
+    .required('This is a required field'),
+  field: yup.string().required('This is a required field'),
   radio_other: yup.string().when('field', {
     is: 'radio_other',
-    then: yup.string().required('This is a required question'),
+    then: yup.string().required('This is a required field'),
   }),
 })
 
@@ -41,6 +42,7 @@ function SignUpINeedSafeSpacePage() {
         institutionPhone: '',
         representativePhone: '',
         institutionEmail: '',
+        password: '',
         representativeEmail: '',
         field: '',
         radio_other: '',
@@ -168,6 +170,20 @@ function SignUpINeedSafeSpacePage() {
                   touched.institutionEmail && !!errors.institutionEmail
                 }
                 error={errors.institutionEmail}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} md='4' controlId='validationFormikPassword'>
+              <FormTextBox
+                label='كلمة السر'
+                name='password'
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={touched.password && !errors.password}
+                isInvalid={touched.password && !!errors.password}
+                error={errors.password}
               />
             </Form.Group>
           </Form.Row>

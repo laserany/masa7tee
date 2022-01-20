@@ -46,7 +46,7 @@ const SignInPage = () => {
               <Col sm={7}>
                 <Form.Control
                   type='text'
-                  placeholder='البريد الالكتروني'
+                  placeholder='البريد الالكتروني للشخص أو المؤسسة'
                   style={arabicTextStyling}
                 />
               </Col>

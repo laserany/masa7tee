@@ -15,7 +15,7 @@ const FormTextBox = ({
     <>
       <Form.Label>{label}</Form.Label>
       <Form.Control
-        type='text'
+        type={name === 'password' ? 'password' : 'text'}
         placeholder='Your answer'
         name={name}
         value={value}

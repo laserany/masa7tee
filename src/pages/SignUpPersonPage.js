@@ -11,19 +11,20 @@ import FormRadioOtherOption from '../components/signup/FormRadioOtherOption'
 import { useHistory } from 'react-router-dom'
 import BlueArrowRightButton from '../components/signup/BlueArrowRightButton'
 const schema = yup.object().shape({
-  name: yup.string().required('This is a required question'),
-  date: yup.date().required('This is a required question'),
-  phone: yup.string().required('This is a required question'),
+  name: yup.string().required('This is a required field'),
+  date: yup.date().required('This is a required field'),
+  phone: yup.string().required('This is a required field'),
   email: yup
     .string()
     .email('Please enter a valid email')
-    .required('This is a required question'),
-  address: yup.string().required('This is a required question'),
-  how: yup.string().required('This is a required question'),
-  why: yup.string().required('This is a required question'),
+    .required('This is a required field'),
+  password: yup.string().required('this is a required field'),
+  address: yup.string().required('This is a required field'),
+  how: yup.string().required('This is a required field'),
+  why: yup.string().required('This is a required field'),
   radio_other: yup.string().when('why', {
     is: 'radio_other',
-    then: yup.string().required('This is a required question'),
+    then: yup.string().required('This is a required field'),
   }),
 })
 
@@ -38,6 +39,7 @@ function SignUpPersonPage() {
         date: '',
         phone: '',
         email: '',
+        password: '',
         address: '',
         how: '',
         why: '',
@@ -106,6 +108,20 @@ function SignUpPersonPage() {
                 isValid={touched.email && !errors.email}
                 isInvalid={touched.email && !!errors.email}
                 error={errors.email}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} md='4' controlId='validationFormikPassword'>
+              <FormTextBox
+                label='كلمة السر'
+                name='password'
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={touched.password && !errors.password}
+                isInvalid={touched.password && !!errors.password}
+                error={errors.password}
               />
             </Form.Group>
           </Form.Row>

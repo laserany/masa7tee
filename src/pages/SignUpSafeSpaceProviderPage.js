@@ -13,36 +13,37 @@ import { useHistory } from 'react-router-dom'
 import BlueArrowRightButton from '../components/signup/BlueArrowRightButton'
 
 const schema = yup.object().shape({
-  institutionName: yup.string().required('This is a required question'),
-  representativeName: yup.string().required('This is a required question'),
-  institutionPhone: yup.string().required('This is a required question'),
-  representativePhone: yup.string().required('This is a required question'),
+  institutionName: yup.string().required('This is a required field'),
+  representativeName: yup.string().required('This is a required field'),
+  institutionPhone: yup.string().required('This is a required field'),
+  representativePhone: yup.string().required('This is a required field'),
   institutionEmail: yup
     .string()
     .email('Please enter a valid email')
-    .required('This is a required question'),
+    .required('This is a required field'),
+  password: yup.string().required('this is a required field'),
   representativeEmail: yup
     .string()
     .email('Please enter a valid email')
-    .required('This is a required question'),
-  field: yup.string().required('This is a required question'),
-  safeSpaceNumber: yup.string().required('This is a required question'),
+    .required('This is a required field'),
+  field: yup.string().required('This is a required field'),
+  safeSpaceNumber: yup.string().required('This is a required field'),
   capacity: yup
     .number()
     .typeError('Field must be a positive number')
     .positive()
     .required('This is a required question'),
-  time: yup.string().required('This is a required question'),
-  logistic: yup.array().min(1, 'This is a required question'),
+  time: yup.string().required('This is a required field'),
+  logistic: yup.array().min(1, 'This is a required field'),
   radio_other: yup.string().when('field', {
     is: 'radio_other',
-    then: yup.string().required('This is a required question'),
+    then: yup.string().required('This is a required field'),
   }),
   checkbox_other: yup.string().when('logistic', {
     is: (logistic) => logistic.length === 1 && logistic[0] === 'checkbox_other',
-    then: yup.string().required('This is a required question'),
+    then: yup.string().required('This is a required field'),
   }),
-  covid: yup.string().required('This is a required question'),
+  covid: yup.string().required('This is a required field'),
 })
 
 function SignUpSafeSpaceProviderPage() {
@@ -57,6 +58,7 @@ function SignUpSafeSpaceProviderPage() {
         institutionPhone: '',
         representativePhone: '',
         institutionEmail: '',
+        password: '',
         representativeEmail: '',
         field: '',
         safeSpaceNumber: '',
@@ -190,6 +192,20 @@ function SignUpSafeSpaceProviderPage() {
                   touched.institutionEmail && !!errors.institutionEmail
                 }
                 error={errors.institutionEmail}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} md='4' controlId='validationFormikPassword'>
+              <FormTextBox
+                label='كلمة السر'
+                name='password'
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={touched.password && !errors.password}
+                isInvalid={touched.password && !!errors.password}
+                error={errors.password}
               />
             </Form.Group>
           </Form.Row>

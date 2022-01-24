@@ -7,7 +7,21 @@ import SaraQuestionsPage from './pages/SaraQuestionsPage'
 import SafeSpaceSpecificationsPage from './pages/SafeSpaceSpecificationsPage'
 import HomePage from './pages/HomePage'
 import BookHallsPage from './pages/BookHallsPage.js'
+import { initializeApp } from 'firebase/app'
+
 function App() {
+  const firebaseConfig = {
+    apiKey: 'AIzaSyAhvsdq59-74iBHOfy3iAz3pDocMDseck4',
+    authDomain: 'masa7tee.firebaseapp.com',
+    projectId: 'masa7tee',
+    storageBucket: 'masa7tee.appspot.com',
+    messagingSenderId: '629309523720',
+    appId: '1:629309523720:web:8227b27b19f7aa46280ebd',
+    measurementId: 'G-SYJKX0YZMW',
+  }
+
+  initializeApp(firebaseConfig)
+
   return (
     <Container>
       <Switch>

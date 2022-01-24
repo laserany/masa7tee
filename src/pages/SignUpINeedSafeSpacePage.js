@@ -8,34 +8,46 @@ import FormRadioOption from '../components/signup/FormRadioOption'
 import FormRadioOtherOption from '../components/signup/FormRadioOtherOption'
 import BlueArrowRightButton from '../components/signup/BlueArrowRightButton'
 import { useHistory } from 'react-router-dom'
-
-const schema = yup.object().shape({
-  institutionName: yup.string().required('This is a required field'),
-  representativeName: yup.string().required('This is a required field'),
-  institutionPhone: yup.string().required('This is a required field'),
-  representativePhone: yup.string().required('This is a required field'),
-  institutionEmail: yup
-    .string()
-    .email('Please enter a valid email')
-    .required('This is a required field'),
-  password: yup.string().required('this is a required field'),
-  representativeEmail: yup
-    .string()
-    .email('Please enter a valid email')
-    .required('This is a required field'),
-  field: yup.string().required('This is a required field'),
-  radio_other: yup.string().when('field', {
-    is: 'radio_other',
-    then: yup.string().required('This is a required field'),
-  }),
-})
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 function SignUpINeedSafeSpacePage() {
+  const schema = yup.object().shape({
+    institutionName: yup.string().required('This is a required field'),
+    representativeName: yup.string().required('This is a required field'),
+    institutionPhone: yup.string().required('This is a required field'),
+    representativePhone: yup.string().required('This is a required field'),
+    institutionEmail: yup
+      .string()
+      .email('Please enter a valid email')
+      .required('This is a required field'),
+    password: yup
+      .string()
+      .min(6, 'Password must be atleast 6 characters')
+      .required('this is a required field'),
+    representativeEmail: yup
+      .string()
+      .email('Please enter a valid email')
+      .required('This is a required field'),
+    field: yup.string().required('This is a required field'),
+    radio_other: yup.string().when('field', {
+      is: 'radio_other',
+      then: yup.string().required('This is a required field'),
+    }),
+  })
   const history = useHistory()
+  const auth = getAuth()
+  let onSubmit = async (data) => {
+    await createUserWithEmailAndPassword(
+      auth,
+      data.institutionEmail,
+      data.password
+    )
+    history.push('/submitted')
+  }
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={() => history.push('/submitted')}
+      onSubmit={onSubmit}
       initialValues={{
         institutionName: '',
         representativeName: '',

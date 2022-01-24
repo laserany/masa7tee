@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Masa7teeButton from '../components/common/Masa7teeButton'
-import { Link } from 'react-router-dom'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import {
   arabicTextStyling,
   masa7teeColor,
 } from '../components/common/constants'
+import { useHistory } from 'react-router-dom'
 
 const SignInPage = () => {
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+  const history = useHistory()
+  const auth = getAuth()
   return (
     <div
       style={{
@@ -32,7 +37,14 @@ const SignInPage = () => {
       </Row>
       <Row className='mt-5'>
         <Col>
-          <Form>
+          <Form
+            noValidate
+            onSubmit={async (e) => {
+              e.preventDefault()
+              await signInWithEmailAndPassword(auth, email, password)
+              history.push('/')
+            }}
+          >
             <Form.Group
               as={Row}
               className='mb-3'
@@ -46,6 +58,7 @@ const SignInPage = () => {
               <Col sm={7}>
                 <Form.Control
                   type='text'
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder='البريد الالكتروني للشخص أو المؤسسة'
                   style={arabicTextStyling}
                 />
@@ -65,6 +78,7 @@ const SignInPage = () => {
               <Col sm={7}>
                 <Form.Control
                   type='password'
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder='كلمة السر'
                   style={arabicTextStyling}
                 />
@@ -72,9 +86,7 @@ const SignInPage = () => {
             </Form.Group>
             <Form.Group as={Row} className='mb-3'>
               <Col sm={{ span: 10, offset: 2 }}>
-                <Link to='/'>
-                  <Masa7teeButton>Sign in</Masa7teeButton>
-                </Link>
+                <Masa7teeButton type='submit'>Sign in</Masa7teeButton>
               </Col>
             </Form.Group>
           </Form>

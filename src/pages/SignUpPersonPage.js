@@ -10,30 +10,40 @@ import FormRadioOptionWithValidation from '../components/signup/FormRadioOptionW
 import FormRadioOtherOption from '../components/signup/FormRadioOtherOption'
 import { useHistory } from 'react-router-dom'
 import BlueArrowRightButton from '../components/signup/BlueArrowRightButton'
-const schema = yup.object().shape({
-  name: yup.string().required('This is a required field'),
-  date: yup.date().required('This is a required field'),
-  phone: yup.string().required('This is a required field'),
-  email: yup
-    .string()
-    .email('Please enter a valid email')
-    .required('This is a required field'),
-  password: yup.string().required('this is a required field'),
-  address: yup.string().required('This is a required field'),
-  how: yup.string().required('This is a required field'),
-  why: yup.string().required('This is a required field'),
-  radio_other: yup.string().when('why', {
-    is: 'radio_other',
-    then: yup.string().required('This is a required field'),
-  }),
-})
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 function SignUpPersonPage() {
+  const schema = yup.object().shape({
+    name: yup.string().required('This is a required field'),
+    date: yup.date().required('This is a required field'),
+    phone: yup.string().required('This is a required field'),
+    email: yup
+      .string()
+      .email('Please enter a valid email')
+      .required('This is a required field'),
+    password: yup
+      .string()
+      .min(6, 'Password must be atleast 6 characters')
+      .required('this is a required field'),
+    address: yup.string().required('This is a required field'),
+    how: yup.string().required('This is a required field'),
+    why: yup.string().required('This is a required field'),
+    radio_other: yup.string().when('why', {
+      is: 'radio_other',
+      then: yup.string().required('This is a required field'),
+    }),
+  })
   const history = useHistory()
+  const auth = getAuth()
+  let onSubmit = async (data) => {
+    await createUserWithEmailAndPassword(auth, data.email, data.password)
+    history.push('/submitted')
+  }
+
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={() => history.push('/submitted')}
+      onSubmit={onSubmit}
       initialValues={{
         name: '',
         date: '',

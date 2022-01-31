@@ -10,7 +10,11 @@ import FormRadioOptionWithValidation from '../components/signup/FormRadioOptionW
 import FormRadioOtherOption from '../components/signup/FormRadioOtherOption'
 import { useHistory } from 'react-router-dom'
 import BlueArrowRightButton from '../components/signup/BlueArrowRightButton'
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from 'firebase/auth'
 
 function SignUpPersonPage() {
   const schema = yup.object().shape({
@@ -35,8 +39,17 @@ function SignUpPersonPage() {
   })
   const history = useHistory()
   const auth = getAuth()
-  let onSubmit = async (data) => {
-    await createUserWithEmailAndPassword(auth, data.email, data.password)
+  let onSubmit = async (data, { setErrors }) => {
+    try {
+      await createUserWithEmailAndPassword(auth, data.email, data.password)
+    } catch (err) {
+      if (err.message.includes('auth/email-already-in-use')) {
+        setErrors({
+          email: 'This email is already registered.',
+        })
+      }
+    }
+    await sendEmailVerification(auth.currentUser)
     history.push('/submitted')
   }
 

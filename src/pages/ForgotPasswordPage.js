@@ -3,18 +3,17 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Masa7teeButton from '../components/common/Masa7teeButton'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth'
 import {
   arabicTextStyling,
   masa7teeColor,
 } from '../components/common/constants'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
-const SignInPage = () => {
+const ForgotPasswordPage = () => {
   const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-  const history = useHistory()
   const auth = getAuth()
+  const history = useHistory()
   return (
     <div
       style={{
@@ -41,8 +40,8 @@ const SignInPage = () => {
             noValidate
             onSubmit={async (e) => {
               e.preventDefault()
-              await signInWithEmailAndPassword(auth, email, password)
-              history.push('/')
+              await sendPasswordResetEmail(auth, email)
+              history.push('/reset-password')
             }}
           >
             <Form.Group
@@ -64,37 +63,9 @@ const SignInPage = () => {
                 />
               </Col>
             </Form.Group>
-
-            <Form.Group
-              as={Row}
-              className='mb-3'
-              controlId='formHorizontalPassword'
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <Col sm={7}>
-                <Form.Control
-                  type='password'
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder='كلمة السر'
-                  style={arabicTextStyling}
-                />
-              </Col>
-            </Form.Group>
             <Form.Group as={Row} className='mb-3'>
-              <Col sm={4}></Col>
-              <Col sm={2}>
-                <Masa7teeButton type='submit'>Sign in</Masa7teeButton>
-              </Col>
-              <Col sm={2}>
-                <Link to='/forgot-password'>
-                  <Masa7teeButton type='submit'>
-                    Forgot your password?
-                  </Masa7teeButton>
-                </Link>
+              <Col>
+                <Masa7teeButton type='submit'>Reset Password</Masa7teeButton>
               </Col>
             </Form.Group>
           </Form>
@@ -104,4 +75,4 @@ const SignInPage = () => {
   )
 }
 
-export default SignInPage
+export default ForgotPasswordPage

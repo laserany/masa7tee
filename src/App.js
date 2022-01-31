@@ -8,6 +8,10 @@ import SafeSpaceSpecificationsPage from './pages/SafeSpaceSpecificationsPage'
 import HomePage from './pages/HomePage'
 import BookHallsPage from './pages/BookHallsPage.js'
 import { initializeApp } from 'firebase/app'
+import { FirebaseAuthProvider } from './firebase/FirebaseAuthContext'
+import SignOutPage from './pages/SignOutPage'
+import ForgotPasswordPage from './pages/ForgotPasswordPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 
 function App() {
   const firebaseConfig = {
@@ -23,21 +27,26 @@ function App() {
   initializeApp(firebaseConfig)
 
   return (
-    <Container>
-      <Switch>
-        <Route path='/home' component={HomePage} />
-        <Route path='/sign-in' component={SignInPage} />
-        <Route path='/sign-up' component={SignUpPage} />
-        <Route path='/questions' component={SaraQuestionsPage} />
-        <Route path='/submitted' component={VerificationEmailPage} />
-        <Route
-          path='/safe-space-specifications'
-          component={SafeSpaceSpecificationsPage}
-        />
-        <Route path='/book-halls' component={BookHallsPage} />
-        <Redirect to='/home' />
-      </Switch>
-    </Container>
+    <FirebaseAuthProvider>
+      <Container>
+        <Switch>
+          <Route path='/home' component={HomePage} />
+          <Route path='/sign-in' component={SignInPage} />
+          <Route path='/sign-out' component={SignOutPage} />
+          <Route path='/sign-up' component={SignUpPage} />
+          <Route path='/forgot-password' component={ForgotPasswordPage} />
+          <Route path='/reset-password' component={ResetPasswordPage} />
+          <Route path='/questions' component={SaraQuestionsPage} />
+          <Route path='/submitted' component={VerificationEmailPage} />
+          <Route
+            path='/safe-space-specifications'
+            component={SafeSpaceSpecificationsPage}
+          />
+          <Route path='/book-halls' component={BookHallsPage} />
+          <Redirect to='/home' />
+        </Switch>
+      </Container>
+    </FirebaseAuthProvider>
   )
 }
 

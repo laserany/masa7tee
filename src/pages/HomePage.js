@@ -16,11 +16,31 @@ import { Switch, Route } from 'react-router-dom'
 import logo from '../components/common/logo.png'
 import { masa7teeColor } from '../components/common/constants'
 import { useMediaQuery } from 'react-responsive'
+import { useFirebaseAuth } from '../firebase/FirebaseAuthContext'
 
 export const ImageWidthContext = React.createContext()
 const HomePage = ({ match }) => {
   const isLaptop = useMediaQuery({ query: '(min-width: 768px)' })
   const imageWidth = isLaptop ? '80%' : '115%'
+  const user = useFirebaseAuth()
+  let signedButton
+  if (!user) {
+    signedButton = (
+      <Link to='/sign-in'>
+        <Masa7teeButton className='btn btn-primary mr-2 mb-2'>
+          Sign in
+        </Masa7teeButton>
+      </Link>
+    )
+  } else {
+    signedButton = (
+      <Link to='/sign-out'>
+        <Masa7teeButton className='btn btn-primary mr-2 mb-2'>
+          Sign out
+        </Masa7teeButton>
+      </Link>
+    )
+  }
   return (
     <>
       <style type='text/css'>
@@ -48,11 +68,8 @@ background-color: ${masa7teeColor} !important;
         </Col>
         <Col md={1} className='mt-4'>
           <div class='btn-toolbar'>
-            <Link to='/sign-in'>
-              <Masa7teeButton className='btn btn-primary mr-2 mb-2'>
-                Sign in
-              </Masa7teeButton>
-            </Link>
+            {signedButton}
+
             <Link to='/sign-up'>
               <Masa7teeButton className='btn btn-primary mr-2 mb-2'>
                 Sign up

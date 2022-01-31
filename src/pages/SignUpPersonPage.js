@@ -14,6 +14,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  signOut,
 } from 'firebase/auth'
 
 function SignUpPersonPage() {
@@ -50,6 +51,7 @@ function SignUpPersonPage() {
       }
     }
     await sendEmailVerification(auth.currentUser)
+    await signOut(auth)
     history.push('/submitted')
   }
 

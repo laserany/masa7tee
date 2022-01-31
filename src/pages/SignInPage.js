@@ -13,6 +13,7 @@ import { useHistory, Link } from 'react-router-dom'
 const SignInPage = () => {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
+  const [errorMessage, setErrorMessage] = useState()
   const history = useHistory()
   const auth = getAuth()
   return (
@@ -41,8 +42,18 @@ const SignInPage = () => {
             noValidate
             onSubmit={async (e) => {
               e.preventDefault()
-              await signInWithEmailAndPassword(auth, email, password)
-              history.push('/')
+              try {
+                await signInWithEmailAndPassword(auth, email, password)
+                if (auth.currentUser.emailVerified) {
+                  history.push('/')
+                } else {
+                  setErrorMessage(
+                    'email is not verified. Please verify email before signing in'
+                  )
+                }
+              } catch (err) {
+                setErrorMessage('email or password is incorrect')
+              }
             }}
           >
             <Form.Group
@@ -84,6 +95,8 @@ const SignInPage = () => {
                 />
               </Col>
             </Form.Group>
+            {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+            <br></br>
             <Form.Group as={Row} className='mb-3'>
               <Col sm={4}></Col>
               <Col sm={2}>

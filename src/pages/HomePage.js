@@ -67,7 +67,7 @@ background-color: ${masa7teeColor} !important;
           <h1>Masa7tee | مساحتي</h1>
         </Col>
         <Col md={1} className='mt-4'>
-          <div class='btn-toolbar'>
+          <div>
             {signedButton}
 
             <Link to='/sign-up'>

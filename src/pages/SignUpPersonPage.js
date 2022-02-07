@@ -16,11 +16,13 @@ import {
   sendEmailVerification,
   signOut,
 } from 'firebase/auth'
+import { collection, addDoc } from 'firebase/firestore'
+import { useFirestore } from '../firebase/FirestoreContext'
 
 function SignUpPersonPage() {
   const schema = yup.object().shape({
     name: yup.string().required('This is a required field'),
-    date: yup.date().required('This is a required field'),
+    dateOfBirth: yup.date().required('This is a required field'),
     phone: yup.string().required('This is a required field'),
     email: yup
       .string()
@@ -31,15 +33,16 @@ function SignUpPersonPage() {
       .min(6, 'Password must be atleast 6 characters')
       .required('this is a required field'),
     address: yup.string().required('This is a required field'),
-    how: yup.string().required('This is a required field'),
-    why: yup.string().required('This is a required field'),
-    radio_other: yup.string().when('why', {
+    hallReference: yup.string().required('This is a required field'),
+    registrationReason: yup.string().required('This is a required field'),
+    radio_other: yup.string().when('registrationReason', {
       is: 'radio_other',
       then: yup.string().required('This is a required field'),
     }),
   })
   const history = useHistory()
   const auth = getAuth()
+  const db = useFirestore()
   let onSubmit = async (data, { setErrors }) => {
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password)
@@ -49,6 +52,20 @@ function SignUpPersonPage() {
           email: 'This email is already registered.',
         })
       }
+    }
+    try {
+      await addDoc(collection(db, 'persons'), {
+        personID: auth.currentUser.uid,
+        name: data.name,
+        dateOfBirth: data.dateOfBirth,
+        phone: data.phone,
+        email: data.email,
+        address: data.address,
+        hallReference: data.hallReference,
+        registrationReason: data.registrationReason,
+      })
+    } catch (e) {
+      console.error('Error adding document: ', e)
     }
     await sendEmailVerification(auth.currentUser)
     await signOut(auth)
@@ -61,13 +78,13 @@ function SignUpPersonPage() {
       onSubmit={onSubmit}
       initialValues={{
         name: '',
-        date: '',
+        dateOfBirth: '',
         phone: '',
         email: '',
         password: '',
         address: '',
-        how: '',
-        why: '',
+        hallReference: '',
+        registrationReason: '',
         radio_other: '',
       }}
     >
@@ -95,16 +112,16 @@ function SignUpPersonPage() {
             </Form.Group>
           </Form.Row>
           <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikDate'>
+            <Form.Group as={Col} md='4' controlId='validationFormikDateOfBirth'>
               <FormDateBox
                 label='تاريخ الميلاد'
-                name='date'
-                value={values.date}
+                name='dateOfBirth'
+                value={values.dateOfBirth}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                isValid={touched.date && !errors.date}
-                isInvalid={touched.date && !!errors.date}
-                error={errors.date}
+                isValid={touched.dateOfBirth && !errors.dateOfBirth}
+                isInvalid={touched.dateOfBirth && !!errors.dateOfBirth}
+                error={errors.dateOfBirth}
               />
             </Form.Group>
           </Form.Row>
@@ -165,74 +182,82 @@ function SignUpPersonPage() {
             </Form.Group>
           </Form.Row>
           <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikHow'>
+            <Form.Group
+              as={Col}
+              md='4'
+              controlId='validationFormikHallReference'
+            >
               <Form.Label>كيف عرفت عن المنصة ؟</Form.Label>
               <FormRadioOption
-                name='how'
+                name='hallReference'
                 value='سوشال ميديا'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <FormRadioOption
-                name='how'
+                name='hallReference'
                 value='أصدقاء و أقارب'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <FormRadioOption
-                name='how'
+                name='hallReference'
                 value='عن طريق البحث'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <FormRadioOptionWithValidation
-                name='how'
+                name='hallReference'
                 value='مؤسسات المجتمع المدني'
                 onChange={handleChange}
                 onBlur={handleBlur}
-                isValid={touched.how && !errors.how}
-                isInvalid={touched.how && !!errors.how}
-                error={errors.how}
+                isValid={touched.hallReference && !errors.hallReference}
+                isInvalid={touched.hallReference && !!errors.hallReference}
+                error={errors.hallReference}
               />
             </Form.Group>
           </Form.Row>
           <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikWhy'>
+            <Form.Group
+              as={Col}
+              md='4'
+              controlId='validationFormikRegistrationReason'
+            >
               <Form.Label>ما سبب تسجيلك بالمنصة</Form.Label>
               <FormRadioOption
-                name='why'
+                name='registrationReason'
                 value='مؤسس مبادرة'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <FormRadioOption
-                name='why'
+                name='registrationReason'
                 value='للتعرف على المساحات'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <FormRadioOption
-                name='why'
+                name='registrationReason'
                 value='التعرف على المنصة'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
 
               <FormRadioOtherOption
-                name='why'
+                name='registrationReason'
                 value={values.radio_other}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 isValid={
-                  (touched.why || touched.radio_other) &&
-                  !errors.why &&
+                  (touched.registrationReason || touched.radio_other) &&
+                  !errors.registrationReason &&
                   !errors.radio_other
                 }
                 isInvalid={
-                  (touched.why || touched.radio_other) &&
-                  (!!errors.why || !!errors.radio_other)
+                  (touched.registrationReason || touched.radio_other) &&
+                  (!!errors.registrationReason || !!errors.radio_other)
                 }
-                error={errors.why || errors.radio_other}
+                error={errors.registrationReason || errors.radio_other}
               />
             </Form.Group>
           </Form.Row>

@@ -8,9 +8,17 @@ import FormRadioOption from '../components/signup/FormRadioOption'
 import FormRadioOtherOption from '../components/signup/FormRadioOtherOption'
 import BlueArrowRightButton from '../components/signup/BlueArrowRightButton'
 import { useHistory } from 'react-router-dom'
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+  signOut,
+} from 'firebase/auth'
+import { collection, addDoc } from 'firebase/firestore'
+import { useFirestore } from '../firebase/FirestoreContext'
 
-function SignUpINeedSafeSpacePage() {
+function SignUpInstitutionPage() {
   const schema = yup.object().shape({
     institutionName: yup.string().required('This is a required field'),
     representativeName: yup.string().required('This is a required field'),
@@ -28,20 +36,49 @@ function SignUpINeedSafeSpacePage() {
       .string()
       .email('Please enter a valid email')
       .required('This is a required field'),
-    field: yup.string().required('This is a required field'),
-    radio_other: yup.string().when('field', {
+    workField: yup.string().required('This is a required field'),
+    radio_other: yup.string().when('workField', {
       is: 'radio_other',
       then: yup.string().required('This is a required field'),
     }),
   })
   const history = useHistory()
   const auth = getAuth()
-  let onSubmit = async (data) => {
-    await createUserWithEmailAndPassword(
-      auth,
-      data.institutionEmail,
-      data.password
-    )
+  const db = useFirestore()
+  let onSubmit = async (data, { setErrors }) => {
+    try {
+      await createUserWithEmailAndPassword(
+        auth,
+        data.institutionEmail,
+        data.password
+      )
+    } catch (err) {
+      if (err.message.includes('auth/email-already-in-use')) {
+        setErrors({
+          email: 'This email is already registered.',
+        })
+      }
+    }
+
+    try {
+      await addDoc(collection(db, 'institutions'), {
+        institutionID: auth.currentUser.uid,
+        institutionName: data.institutionName,
+        representativeName: data.representativeName,
+        institutionPhone: data.institutionPhone,
+        representativePhone: data.representativePhone,
+        institutionEmail: data.institutionEmail,
+        representativeEmail: data.representativeEmail,
+        workField: data.workField,
+      })
+    } catch (e) {
+      console.error('Error adding document: ', e)
+    }
+    await sendEmailVerification(auth.currentUser)
+    await updateProfile(auth.currentUser, {
+      displayName: 'Institution',
+    })
+    await signOut(auth)
     history.push('/submitted')
   }
   return (
@@ -56,7 +93,7 @@ function SignUpINeedSafeSpacePage() {
         institutionEmail: '',
         password: '',
         representativeEmail: '',
-        field: '',
+        workField: '',
         radio_other: '',
       }}
     >
@@ -88,60 +125,60 @@ function SignUpINeedSafeSpacePage() {
             </Form.Group>
           </Form.Row>
           <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikField'>
+            <Form.Group as={Col} md='4' controlId='validationFormikWorkField'>
               <Form.Label>مجال العمل</Form.Label>
               <FormRadioOption
-                name='field'
+                name='workField'
                 value='اجتماعي'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <FormRadioOption
-                name='field'
+                name='workField'
                 value='ثقافي'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <FormRadioOption
-                name='field'
+                name='workField'
                 value='تنموي'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <FormRadioOption
-                name='field'
+                name='workField'
                 value='خيري'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <FormRadioOption
-                name='field'
+                name='workField'
                 value='سياسي'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
               <FormRadioOption
-                name='field'
+                name='workField'
                 value='رقمي'
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
 
               <FormRadioOtherOption
-                name='field'
+                name='workField'
                 value={values.radio_other}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 isValid={
-                  (touched.field || touched.radio_other) &&
-                  !errors.field &&
+                  (touched.workField || touched.radio_other) &&
+                  !errors.workField &&
                   !errors.radio_other
                 }
                 isInvalid={
-                  (touched.field || touched.radio_other) &&
-                  (!!errors.field || !!errors.radio_other)
+                  (touched.workField || touched.radio_other) &&
+                  (!!errors.workField || !!errors.radio_other)
                 }
-                error={errors.field || errors.radio_other}
+                error={errors.workField || errors.radio_other}
               />
             </Form.Group>
           </Form.Row>
@@ -277,4 +314,4 @@ function SignUpINeedSafeSpacePage() {
   )
 }
 
-export default SignUpINeedSafeSpacePage
+export default SignUpInstitutionPage

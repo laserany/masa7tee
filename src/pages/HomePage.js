@@ -23,7 +23,7 @@ const HomePage = ({ match }) => {
   const isLaptop = useMediaQuery({ query: '(min-width: 768px)' })
   const imageWidth = isLaptop ? '80%' : '115%'
   const user = useFirebaseAuth()
-  let signedButton
+  let signedButton, bookHallButton, registerHallButton
   if (!user) {
     signedButton = (
       <Link to='/sign-in'>
@@ -40,7 +40,24 @@ const HomePage = ({ match }) => {
         </Masa7teeButton>
       </Link>
     )
+    bookHallButton = (
+      <Link to='/book-hall'>
+        <Masa7teeButton className='btn btn-primary mr-2 mb-2' width='100px'>
+          Book Hall
+        </Masa7teeButton>
+      </Link>
+    )
+    if (user.displayName === 'Institution') {
+      registerHallButton = (
+        <Link to='/register-hall'>
+          <Masa7teeButton className='btn btn-primary mr-2 mb-2' width='100px'>
+            Register Hall
+          </Masa7teeButton>
+        </Link>
+      )
+    }
   }
+
   return (
     <>
       <style type='text/css'>
@@ -75,14 +92,8 @@ background-color: ${masa7teeColor} !important;
                 Sign up
               </Masa7teeButton>
             </Link>
-            <Link to='/book-halls'>
-              <Masa7teeButton
-                className='btn btn-primary mr-2 mb-2'
-                width='100px'
-              >
-                Book Halls
-              </Masa7teeButton>
-            </Link>
+            {bookHallButton}
+            {registerHallButton}
           </div>
         </Col>
         <Col md={1} className='mt-5'>

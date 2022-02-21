@@ -6,7 +6,7 @@ import HallsSearchFilter from '../components/halls/HallsSearchFilter'
 import { arabicTextStyling, hallsSpec } from '../components/common/constants'
 import { array_chunks } from '../components/common/utils'
 import { useState } from 'react'
-const BookHallsPage = () => {
+const BookHallPage = () => {
   const [location, setLocation] = useState()
   const [capacity, setCapacity] = useState()
   const [name, setName] = useState()
@@ -80,4 +80,4 @@ const BookHallsPage = () => {
   )
 }
 
-export default BookHallsPage
+export default BookHallPage

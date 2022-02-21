@@ -14,6 +14,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  updateProfile,
   signOut,
 } from 'firebase/auth'
 import { collection, addDoc } from 'firebase/firestore'
@@ -68,6 +69,9 @@ function SignUpPersonPage() {
       console.error('Error adding document: ', e)
     }
     await sendEmailVerification(auth.currentUser)
+    await updateProfile(auth.currentUser, {
+      displayName: 'Person',
+    })
     await signOut(auth)
     history.push('/submitted')
   }

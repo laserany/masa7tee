@@ -41,13 +41,8 @@ const SignUpMainPage = () => {
             ></img>
             <br />
             <br />
-            <BorderedListGroupItemWithBlueRadioButton href='#i-need-safe-space'>
-              i need safe space
-            </BorderedListGroupItemWithBlueRadioButton>
-            <br />
-
-            <BorderedListGroupItemWithBlueRadioButton href='#safe-space-provider'>
-              safe space provider
+            <BorderedListGroupItemWithBlueRadioButton href='#institution'>
+              Institution
             </BorderedListGroupItemWithBlueRadioButton>
           </Col>
           <Col md={2} />

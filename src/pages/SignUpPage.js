@@ -1,7 +1,6 @@
 import React from 'react'
 import SignUpPersonPage from './SignUpPersonPage'
-import SignUpINeedSafeSpacePage from './SignUpINeedSafeSpacePage'
-import SignUpSafeSpaceProviderPage from './SignUpSafeSpaceProviderPage'
+import SignUpInstitutionPage from './SignUpInstitutionPage'
 import SignUpMainPage from './SignUpMainPage'
 import { Switch, Route } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
@@ -20,12 +19,8 @@ const SignUpPage = ({ match }) => {
           <Switch>
             <Route path={`${url}/person`} component={SignUpPersonPage} />
             <Route
-              path={`${url}/i-need-safe-space`}
-              component={SignUpINeedSafeSpacePage}
-            />
-            <Route
-              path={`${url}/safe-space-provider`}
-              component={SignUpSafeSpaceProviderPage}
+              path={`${url}/institution`}
+              component={SignUpInstitutionPage}
             />
             <Route component={SignUpMainPage} />
           </Switch>

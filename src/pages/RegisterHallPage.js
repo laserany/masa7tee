@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import Form from 'react-bootstrap/Form'
@@ -8,55 +8,129 @@ import FormCheckboxOption from '../components/signup/FormCheckboxOption'
 import FormCheckboxOtherOption from '../components/signup/FormCheckboxOtherOption'
 import BlueArrowRightButton from '../components/signup/BlueArrowRightButton'
 import FormFileBox from '../components/signup/FormFileBox'
+import Table from 'react-bootstrap/Table'
+import CenteredTableHead from '../components/common/CenteredTableHead'
+import Masa7teeButton from '../components/common/Masa7teeButton'
+import { getAuth } from 'firebase/auth'
+import { collection, addDoc } from 'firebase/firestore'
+import { useFirestore } from '../firebase/FirestoreContext'
+import { useHistory } from 'react-router-dom'
+import { ref, uploadBytes, listAll } from 'firebase/storage'
+import { useFirebaseStorage } from '../firebase/FirebaseStorageContext'
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png']
 
-const schema = yup.object().shape({
-  hallName: yup.string().required('This is a required field'),
-  capacity: yup
-    .number()
-    .typeError('Field must be a positive number')
-    .positive()
-    .required('This is a required question'),
-  price: yup
-    .number()
-    .typeError('Field must be a positive number')
-    .positive()
-    .required('This is a required question'),
-  picture: yup
-    .mixed()
-    .required('This is a required field')
-    .test(
-      'fileFormat',
-      'Unsupported Format',
-      (value) => value && SUPPORTED_FORMATS.includes(value.type)
-    ),
-  time: yup.string().required('This is a required field'),
-  logistic: yup.array().min(1, 'This is a required field'),
-  radio_other: yup.string().when('field', {
-    is: 'radio_other',
-    then: yup.string().required('This is a required field'),
-  }),
-  checkbox_other: yup.string().when('logistic', {
-    is: (logistic) => logistic.length === 1 && logistic[0] === 'checkbox_other',
-    then: yup.string().required('This is a required field'),
-  }),
-  covid: yup.string().required('This is a required field'),
-})
+let dawamList = []
 
 function SignUpSafeSpaceProviderPage() {
+  const schema = yup.object().shape({
+    hallName: yup.string().required('This is a required field'),
+    capacity: yup
+      .number()
+      .typeError('Field must be a positive number')
+      .positive()
+      .required('This is a required question'),
+    picture: yup
+      .mixed()
+      .required('This is a required field')
+      .test(
+        'fileFormat',
+        'Unsupported Format',
+        (value) => value && SUPPORTED_FORMATS.includes(value.type)
+      ),
+    logistic: yup.array().min(1, 'This is a required field'),
+    checkbox_other: yup.string().when('logistic', {
+      is: (logistic) =>
+        logistic.length === 1 && logistic[0] === 'checkbox_other',
+      then: yup.string().required('This is a required field'),
+    }),
+    covid: yup.string().required('This is a required field'),
+  })
+
+  const history = useHistory()
+  const auth = getAuth()
+  const db = useFirestore()
+  const storage = useFirebaseStorage()
+  let onSubmit = async (data, { setErrors }) => {
+    const storageItemsList = await listAll(ref(storage))
+    if (
+      storageItemsList.items.some((e) => e._location.path_ === data.hallName)
+    ) {
+      setErrors({
+        hallName: 'This hall is already registered.',
+      })
+      return
+    }
+
+    const storageRef = ref(storage, data.hallName)
+    await uploadBytes(storageRef, data.picture)
+    try {
+      await addDoc(collection(db, 'halls'), {
+        institutionID: auth.currentUser.uid,
+        name: data.hallName,
+        capacity: data.capacity,
+        logistic:
+          other.length > 0
+            ? [...data.logistic, other].filter((e) => e !== 'checkbox_other')
+            : data.logistic,
+        covid: data.covid,
+        dawamList: dawamList,
+      })
+    } catch (e) {
+      console.error('Error adding document: ', e)
+    }
+    history.push('/home')
+  }
+  const [dawamListSize, setDawamListSize] = useState(0)
+  const [other, setOther] = useState('')
+  var rows = []
+  for (let i = 0; i < dawamListSize; i++) {
+    // note: we are adding a key prop here to allow react to uniquely identify each
+    // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
+    rows.push(
+      <tr key={i}>
+        <td
+          contentEditable
+          onKeyUp={(e) =>
+            (dawamList[i].price = e.target.innerText.slice(0, -1))
+          }
+        ></td>
+        <td
+          contentEditable
+          onKeyUp={(e) =>
+            (dawamList[i].reservationCapability = e.target.innerText.slice(
+              0,
+              -1
+            ))
+          }
+        ></td>
+        <td
+          contentEditable
+          onKeyUp={(e) =>
+            (dawamList[i].availability = e.target.innerText).slice(0, -1)
+          }
+        ></td>
+        <td
+          contentEditable
+          onKeyUp={(e) => (dawamList[i].time = e.target.innerText).slice(0, -1)}
+        ></td>
+        <td
+          contentEditable
+          onKeyUp={(e) => (dawamList[i].date = e.target.innerText).slice(0, -1)}
+        ></td>
+      </tr>
+    )
+  }
+
   return (
     <Formik
       validationSchema={schema}
-      onSubmit={(e) => console.log(e)}
+      onSubmit={onSubmit}
       initialValues={{
         hallName: '',
         capacity: '',
-        price: '',
         picture: '',
-        time: '',
         logistic: [],
-        radio_other: '',
         checkbox_other: '',
         covid: '',
       }}
@@ -101,34 +175,6 @@ function SignUpSafeSpaceProviderPage() {
             </Form.Group>
           </Form.Row>
           <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikPrice'>
-              <FormTextBox
-                label='المبلغ'
-                name='price'
-                value={values.price}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isValid={touched.price && !errors.price}
-                isInvalid={touched.price && !!errors.price}
-                error={errors.price}
-              />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikTime'>
-              <FormTextBox
-                label='أيام وأوقات الدوام'
-                name='time'
-                value={values.time}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isValid={touched.time && !errors.time}
-                isInvalid={touched.time && !!errors.time}
-                error={errors.time}
-              />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
             <Form.Group as={Col} md='4' controlId='validationFormikLogistic'>
               <Form.Label>اللوجستيات المتوفرة</Form.Label>
               <FormCheckboxOption
@@ -160,6 +206,7 @@ function SignUpSafeSpaceProviderPage() {
                 value={values.checkbox_other}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                setOther={setOther}
                 isValid={
                   (touched.logistic || touched.checkbox_other) &&
                   !errors.logistic &&
@@ -199,6 +246,39 @@ function SignUpSafeSpaceProviderPage() {
                 error={errors.picture}
               />
             </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Masa7teeButton
+              onClick={() => {
+                dawamList.push({})
+                setDawamListSize(dawamListSize + 1)
+              }}
+            >
+              Add Row
+            </Masa7teeButton>
+            <Masa7teeButton
+              onClick={() => {
+                dawamList.pop()
+                setDawamListSize(dawamListSize - 1)
+              }}
+              style={{ marginLeft: '10px' }}
+            >
+              Delete Row
+            </Masa7teeButton>
+          </Form.Row>
+          <Form.Row className='mt-3'>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <CenteredTableHead>المبلغ</CenteredTableHead>
+                  <CenteredTableHead>الاستطاعة للحجز</CenteredTableHead>
+                  <CenteredTableHead>الفراغ / عدم الفراغ</CenteredTableHead>
+                  <CenteredTableHead>الوقت</CenteredTableHead>
+                  <CenteredTableHead>اليوم والتاريخ</CenteredTableHead>
+                </tr>
+              </thead>
+              <tbody>{rows}</tbody>
+            </Table>
           </Form.Row>
           <Form.Row className='mt-3'>
             <Col md={10}></Col>

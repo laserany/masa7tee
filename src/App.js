@@ -3,17 +3,17 @@ import SignUpPage from './pages/SignUpPage'
 import VerificationEmailPage from './pages/VerificationEmailPage'
 import Container from 'react-bootstrap/Container'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import SaraQuestionsPage from './pages/SaraQuestionsPage'
-import SafeSpaceSpecificationsPage from './pages/SafeSpaceSpecificationsPage'
 import HomePage from './pages/HomePage'
 import BookHallPage from './pages/BookHallPage.js'
 import RegisterHallPage from './pages/RegisterHallPage.js'
 import { initializeApp } from 'firebase/app'
-import { FirebaseAuthProvider } from './firebase/FirebaseAuthContext'
-import { FirestoreProvider } from './firebase/FirestoreContext'
 import SignOutPage from './pages/SignOutPage'
 import ForgotPasswordPage from './pages/ForgotPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
+import { FirebaseAuthProvider } from './firebase/FirebaseAuthContext'
+import { FirestoreProvider } from './firebase/FirestoreContext'
+import AuthRoute from './routes/AuthRoute'
+import { FirebaseStorageProvider } from './firebase/FirebaseStorageContext'
 
 function App() {
   const firebaseConfig = {
@@ -31,25 +31,24 @@ function App() {
   return (
     <FirebaseAuthProvider>
       <FirestoreProvider>
-        <Container>
-          <Switch>
-            <Route path='/home' component={HomePage} />
-            <Route path='/sign-in' component={SignInPage} />
-            <Route path='/sign-out' component={SignOutPage} />
-            <Route path='/sign-up' component={SignUpPage} />
-            <Route path='/forgot-password' component={ForgotPasswordPage} />
-            <Route path='/reset-password' component={ResetPasswordPage} />
-            <Route path='/questions' component={SaraQuestionsPage} />
-            <Route path='/submitted' component={VerificationEmailPage} />
-            <Route path='/register-hall' component={RegisterHallPage} />
-            <Route
-              path='/safe-space-specifications'
-              component={SafeSpaceSpecificationsPage}
-            />
-            <Route path='/book-hall' component={BookHallPage} />
-            <Redirect to='/home' />
-          </Switch>
-        </Container>
+        <FirebaseStorageProvider>
+          <Container>
+            <Switch>
+              <Route path='/home' component={HomePage} />
+              <Route path='/sign-in' component={SignInPage} />
+              <Route path='/sign-up' component={SignUpPage} />
+              <Route path='/forgot-password' component={ForgotPasswordPage} />
+              <Route path='/reset-password' component={ResetPasswordPage} />
+              <Route path='/submitted' component={VerificationEmailPage} />
+              <AuthRoute>
+                <Route path='/sign-out' component={SignOutPage} />
+                <Route path='/register-hall' component={RegisterHallPage} />
+                <Route path='/book-hall' component={BookHallPage} />
+              </AuthRoute>
+              <Redirect to='/home' />
+            </Switch>
+          </Container>
+        </FirebaseStorageProvider>
       </FirestoreProvider>
     </FirebaseAuthProvider>
   )

@@ -45,7 +45,7 @@ const SignInPage = () => {
               try {
                 await signInWithEmailAndPassword(auth, email, password)
                 if (auth.currentUser.emailVerified) {
-                  history.push('/')
+                  history.push('/home')
                 } else {
                   setErrorMessage(
                     'email is not verified. Please verify email before signing in'

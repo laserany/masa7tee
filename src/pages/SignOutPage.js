@@ -10,7 +10,7 @@ const SignOutPage = () => {
       const auth = getAuth()
       await signOut(auth)
       setTimeout(function () {
-        history.push('/')
+        history.push('/home')
       }, 3000)
     }
     signUserOut()

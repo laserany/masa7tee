@@ -7,6 +7,7 @@ const FormCheckboxOtherOption = ({
   value,
   onChange,
   onBlur,
+  setOther,
   isValid,
   isInvalid,
   error,
@@ -30,7 +31,10 @@ const FormCheckboxOtherOption = ({
         type='text'
         name='checkbox_other'
         value={value}
-        onChange={onChange}
+        onChange={(e) => {
+          setOther(e.target.value)
+          onChange(e)
+        }}
         onBlur={onBlur}
       />
 

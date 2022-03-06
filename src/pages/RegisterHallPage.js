@@ -17,6 +17,7 @@ import { useFirestore } from '../firebase/FirestoreContext'
 import { useHistory } from 'react-router-dom'
 import { ref, uploadBytes, listAll } from 'firebase/storage'
 import { useFirebaseStorage } from '../firebase/FirebaseStorageContext'
+import FormSelectBox from '../components/signup/FormSelectBox'
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png']
 
@@ -38,6 +39,7 @@ function SignUpSafeSpaceProviderPage() {
         'Unsupported Format',
         (value) => value && SUPPORTED_FORMATS.includes(value.type)
       ),
+    location: yup.string().required('This is a required field'),
     logistic: yup.array().min(1, 'This is a required field'),
     checkbox_other: yup.string().when('logistic', {
       is: (logistic) =>
@@ -62,18 +64,20 @@ function SignUpSafeSpaceProviderPage() {
       return
     }
 
-    const storageRef = ref(storage, data.hallName)
+    const storageRef = ref(storage, `hallImages/${data.hallName}`)
     await uploadBytes(storageRef, data.picture)
     try {
       await addDoc(collection(db, 'halls'), {
         institutionID: auth.currentUser.uid,
         name: data.hallName,
         capacity: data.capacity,
+        location: data.location,
         logistic:
           other.length > 0
             ? [...data.logistic, other].filter((e) => e !== 'checkbox_other')
             : data.logistic,
         covid: data.covid,
+        photoUrl: `https://storage.googleapis.com/masa7tee.appspot.com/hallImages/${data.hallName}`,
         dawamList: dawamList,
       })
     } catch (e) {
@@ -130,6 +134,7 @@ function SignUpSafeSpaceProviderPage() {
         hallName: '',
         capacity: '',
         picture: '',
+        location: '',
         logistic: [],
         checkbox_other: '',
         covid: '',
@@ -244,6 +249,20 @@ function SignUpSafeSpaceProviderPage() {
                 isValid={touched.picture && !errors.picture}
                 isInvalid={touched.picture && !!errors.picture}
                 error={errors.picture}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col} md='4' controlId='validationFormikLocation'>
+              <FormSelectBox
+                label='موقع القاعة'
+                name='location'
+                value={values.location}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={touched.location && !errors.location}
+                isInvalid={touched.location && !!errors.location}
+                error={errors.location}
               />
             </Form.Group>
           </Form.Row>

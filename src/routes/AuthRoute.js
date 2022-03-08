@@ -6,7 +6,7 @@ function AuthRoute({ children }) {
   const user = useFirebaseAuth()
   const location = useLocation()
   if (user === null) {
-    return <Redirect to='/sign-in' state={{ path: location.pathname }} />
+    return <Redirect to='/home' state={{ path: location.pathname }} />
   } else {
     return children
   }

@@ -18,12 +18,15 @@ import { useHistory } from 'react-router-dom'
 import { ref, uploadBytes, listAll } from 'firebase/storage'
 import { useFirebaseStorage } from '../firebase/FirebaseStorageContext'
 import FormSelectBox from '../components/signup/FormSelectBox'
+import { useFirebaseAuth } from '../firebase/FirebaseAuthContext'
+import { Redirect } from 'react-router-dom'
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png']
 
 let dawamList = []
 
-function SignUpSafeSpaceProviderPage() {
+function RegisterHallPage() {
+  const user = useFirebaseAuth()
   const schema = yup.object().shape({
     hallName: yup.string().required('This is a required field'),
     capacity: yup
@@ -126,189 +129,193 @@ function SignUpSafeSpaceProviderPage() {
     )
   }
 
-  return (
-    <Formik
-      validationSchema={schema}
-      onSubmit={onSubmit}
-      initialValues={{
-        hallName: '',
-        capacity: '',
-        picture: '',
-        location: '',
-        logistic: [],
-        checkbox_other: '',
-        covid: '',
-      }}
-    >
-      {({
-        handleSubmit,
-        handleChange,
-        handleBlur,
-        setFieldValue,
-        values,
-        touched,
-        errors,
-      }) => (
-        <Form noValidate onSubmit={handleSubmit}>
-          <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikHallName'>
-              <FormTextBox
-                label='اسم القاعة'
-                name='hallName'
-                value={values.hallName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isValid={touched.hallName && !errors.hallName}
-                isInvalid={touched.hallName && !!errors.hallName}
-                error={errors.hallName}
-              />
-            </Form.Group>
-          </Form.Row>
+  if (user.displayName === 'Institution') {
+    return (
+      <Formik
+        validationSchema={schema}
+        onSubmit={onSubmit}
+        initialValues={{
+          hallName: '',
+          capacity: '',
+          picture: '',
+          location: '',
+          logistic: [],
+          checkbox_other: '',
+          covid: '',
+        }}
+      >
+        {({
+          handleSubmit,
+          handleChange,
+          handleBlur,
+          setFieldValue,
+          values,
+          touched,
+          errors,
+        }) => (
+          <Form noValidate onSubmit={handleSubmit}>
+            <Form.Row>
+              <Form.Group as={Col} md='4' controlId='validationFormikHallName'>
+                <FormTextBox
+                  label='اسم القاعة'
+                  name='hallName'
+                  value={values.hallName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isValid={touched.hallName && !errors.hallName}
+                  isInvalid={touched.hallName && !!errors.hallName}
+                  error={errors.hallName}
+                />
+              </Form.Group>
+            </Form.Row>
 
-          <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikCapacity'>
-              <FormTextBox
-                label='السعة الكبرى للقاعة ؟'
-                name='capacity'
-                value={values.capacity}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isValid={touched.capacity && !errors.capacity}
-                isInvalid={touched.capacity && !!errors.capacity}
-                error={errors.capacity}
-              />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikLogistic'>
-              <Form.Label>اللوجستيات المتوفرة</Form.Label>
-              <FormCheckboxOption
-                name='logistic'
-                value='تدفئة'
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <FormCheckboxOption
-                name='logistic'
-                value='شاشة'
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <FormCheckboxOption
-                name='logistic'
-                value='قرطاسية'
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <FormCheckboxOption
-                name='logistic'
-                value='Coffee break'
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <FormCheckboxOtherOption
-                name='logistic'
-                value={values.checkbox_other}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                setOther={setOther}
-                isValid={
-                  (touched.logistic || touched.checkbox_other) &&
-                  !errors.logistic &&
-                  !errors.checkbox_other
-                }
-                isInvalid={
-                  (touched.logistic || touched.checkbox_other) &&
-                  (!!errors.logistic || !!errors.checkbox_other)
-                }
-                error={errors.logistic || errors.checkbox_other}
-              />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikCovid'>
-              <FormTextBox
-                label='ما هي اشتراطات السلامة العامة؟'
-                name='covid'
-                value={values.covid}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isValid={touched.covid && !errors.covid}
-                isInvalid={touched.covid && !!errors.covid}
-                error={errors.covid}
-              />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikPicture'>
-              <FormFileBox
-                label='صورة القاعة'
-                name='picture'
-                setFieldValue={setFieldValue}
-                onBlur={handleBlur}
-                isValid={touched.picture && !errors.picture}
-                isInvalid={touched.picture && !!errors.picture}
-                error={errors.picture}
-              />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} md='4' controlId='validationFormikLocation'>
-              <FormSelectBox
-                label='موقع القاعة'
-                name='location'
-                value={values.location}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isValid={touched.location && !errors.location}
-                isInvalid={touched.location && !!errors.location}
-                error={errors.location}
-              />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Masa7teeButton
-              onClick={() => {
-                dawamList.push({})
-                setDawamListSize(dawamListSize + 1)
-              }}
-            >
-              Add Row
-            </Masa7teeButton>
-            <Masa7teeButton
-              onClick={() => {
-                dawamList.pop()
-                setDawamListSize(dawamListSize - 1)
-              }}
-              style={{ marginLeft: '10px' }}
-            >
-              Delete Row
-            </Masa7teeButton>
-          </Form.Row>
-          <Form.Row className='mt-3'>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <CenteredTableHead>المبلغ</CenteredTableHead>
-                  <CenteredTableHead>الاستطاعة للحجز</CenteredTableHead>
-                  <CenteredTableHead>الفراغ / عدم الفراغ</CenteredTableHead>
-                  <CenteredTableHead>الوقت</CenteredTableHead>
-                  <CenteredTableHead>اليوم والتاريخ</CenteredTableHead>
-                </tr>
-              </thead>
-              <tbody>{rows}</tbody>
-            </Table>
-          </Form.Row>
-          <Form.Row className='mt-3'>
-            <Col md={10}></Col>
-            <Col>
-              <BlueArrowRightButton />
-            </Col>
-          </Form.Row>
-        </Form>
-      )}
-    </Formik>
-  )
+            <Form.Row>
+              <Form.Group as={Col} md='4' controlId='validationFormikCapacity'>
+                <FormTextBox
+                  label='السعة الكبرى للقاعة ؟'
+                  name='capacity'
+                  value={values.capacity}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isValid={touched.capacity && !errors.capacity}
+                  isInvalid={touched.capacity && !!errors.capacity}
+                  error={errors.capacity}
+                />
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} md='4' controlId='validationFormikLogistic'>
+                <Form.Label>اللوجستيات المتوفرة</Form.Label>
+                <FormCheckboxOption
+                  name='logistic'
+                  value='تدفئة'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <FormCheckboxOption
+                  name='logistic'
+                  value='شاشة'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <FormCheckboxOption
+                  name='logistic'
+                  value='قرطاسية'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <FormCheckboxOption
+                  name='logistic'
+                  value='Coffee break'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <FormCheckboxOtherOption
+                  name='logistic'
+                  value={values.checkbox_other}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  setOther={setOther}
+                  isValid={
+                    (touched.logistic || touched.checkbox_other) &&
+                    !errors.logistic &&
+                    !errors.checkbox_other
+                  }
+                  isInvalid={
+                    (touched.logistic || touched.checkbox_other) &&
+                    (!!errors.logistic || !!errors.checkbox_other)
+                  }
+                  error={errors.logistic || errors.checkbox_other}
+                />
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} md='4' controlId='validationFormikCovid'>
+                <FormTextBox
+                  label='ما هي اشتراطات السلامة العامة؟'
+                  name='covid'
+                  value={values.covid}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isValid={touched.covid && !errors.covid}
+                  isInvalid={touched.covid && !!errors.covid}
+                  error={errors.covid}
+                />
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} md='4' controlId='validationFormikPicture'>
+                <FormFileBox
+                  label='صورة القاعة'
+                  name='picture'
+                  setFieldValue={setFieldValue}
+                  onBlur={handleBlur}
+                  isValid={touched.picture && !errors.picture}
+                  isInvalid={touched.picture && !!errors.picture}
+                  error={errors.picture}
+                />
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Form.Group as={Col} md='4' controlId='validationFormikLocation'>
+                <FormSelectBox
+                  label='موقع القاعة'
+                  name='location'
+                  value={values.location}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isValid={touched.location && !errors.location}
+                  isInvalid={touched.location && !!errors.location}
+                  error={errors.location}
+                />
+              </Form.Group>
+            </Form.Row>
+            <Form.Row>
+              <Masa7teeButton
+                onClick={() => {
+                  dawamList.push({})
+                  setDawamListSize(dawamListSize + 1)
+                }}
+              >
+                Add Row
+              </Masa7teeButton>
+              <Masa7teeButton
+                onClick={() => {
+                  dawamList.pop()
+                  setDawamListSize(dawamListSize - 1)
+                }}
+                style={{ marginLeft: '10px' }}
+              >
+                Delete Row
+              </Masa7teeButton>
+            </Form.Row>
+            <Form.Row className='mt-3'>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <CenteredTableHead>المبلغ</CenteredTableHead>
+                    <CenteredTableHead>الاستطاعة للحجز</CenteredTableHead>
+                    <CenteredTableHead>الفراغ / عدم الفراغ</CenteredTableHead>
+                    <CenteredTableHead>الوقت</CenteredTableHead>
+                    <CenteredTableHead>اليوم والتاريخ</CenteredTableHead>
+                  </tr>
+                </thead>
+                <tbody>{rows}</tbody>
+              </Table>
+            </Form.Row>
+            <Form.Row className='mt-3'>
+              <Col md={10}></Col>
+              <Col>
+                <BlueArrowRightButton />
+              </Col>
+            </Form.Row>
+          </Form>
+        )}
+      </Formik>
+    )
+  } else {
+    return <Redirect to='/home' />
+  }
 }
 
-export default SignUpSafeSpaceProviderPage
+export default RegisterHallPage

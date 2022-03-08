@@ -9,7 +9,6 @@ import { useState } from 'react'
 import { collection, getDocs, query } from 'firebase/firestore'
 import { useFirestore } from '../firebase/FirestoreContext'
 const BookHallPage = () => {
-  let cards = []
   const db = useFirestore()
   const [location, setLocation] = useState()
   const [capacity, setCapacity] = useState()
@@ -28,6 +27,7 @@ const BookHallPage = () => {
   }, [db])
 
   React.useEffect(() => {
+    let cards = []
     if (allHalls) {
       setCardGroups([])
       let filteredHallsSpec
@@ -80,10 +80,9 @@ const BookHallPage = () => {
       }
       let card_chunks = array_chunks(cards, 3)
       for (let i = 0; i < card_chunks.length; i++) {
-        setCardGroups([
-          ...cardGroups,
-          <CardGroup key={i}>{card_chunks[i]}</CardGroup>,
-        ])
+        setCardGroups((cardGroups) =>
+          cardGroups.concat(<CardGroup key={i}>{card_chunks[i]}</CardGroup>)
+        )
       }
     }
   }, [allHalls, capacity, location, name])

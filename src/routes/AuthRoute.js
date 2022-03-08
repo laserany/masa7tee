@@ -5,11 +5,11 @@ import { useFirebaseAuth } from '../firebase/FirebaseAuthContext'
 function AuthRoute({ children }) {
   const user = useFirebaseAuth()
   const location = useLocation()
-  return !!user ? (
-    children
-  ) : (
-    <Redirect to='/home' state={{ path: location.pathname }} />
-  )
+  if (user === null) {
+    return <Redirect to='/sign-in' state={{ path: location.pathname }} />
+  } else {
+    return children
+  }
 }
 
 export default AuthRoute

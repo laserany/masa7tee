@@ -14,6 +14,7 @@ import { FirebaseAuthProvider } from './firebase/FirebaseAuthContext'
 import { FirestoreProvider } from './firebase/FirestoreContext'
 import AuthRoute from './routes/AuthRoute'
 import { FirebaseStorageProvider } from './firebase/FirebaseStorageContext'
+import { useState } from 'react'
 
 function App() {
   const firebaseConfig = {
@@ -28,25 +29,32 @@ function App() {
 
   initializeApp(firebaseConfig)
 
+  const [loading, setLoading] = useState(true)
+
   return (
-    <FirebaseAuthProvider>
+    <FirebaseAuthProvider setLoading={setLoading}>
       <FirestoreProvider>
         <FirebaseStorageProvider>
           <Container>
-            <Switch>
-              <Route path='/home' component={HomePage} />
-              <Route path='/sign-in' component={SignInPage} />
-              <Route path='/sign-up' component={SignUpPage} />
-              <Route path='/forgot-password' component={ForgotPasswordPage} />
-              <Route path='/reset-password' component={ResetPasswordPage} />
-              <Route path='/submitted' component={VerificationEmailPage} />
-              <AuthRoute>
-                <Route path='/sign-out' component={SignOutPage} />
-                <Route path='/register-hall' component={RegisterHallPage} />
-                <Route path='/book-hall' component={BookHallPage} />
-              </AuthRoute>
-              <Redirect to='/home' />
-            </Switch>
+            {!loading && (
+              <Switch>
+                <Route path='/home' component={HomePage} />
+                <Route path='/sign-in' component={SignInPage} />
+                <Route path='/sign-up' component={SignUpPage} />
+                <Route path='/forgot-password' component={ForgotPasswordPage} />
+                <Route path='/reset-password' component={ResetPasswordPage} />
+                <Route path='/submitted' component={VerificationEmailPage} />
+                <AuthRoute>
+                  <Switch>
+                    <Route path='/sign-out' component={SignOutPage} />
+                    <Route path='/register-hall' component={RegisterHallPage} />
+                    <Route path='/book-hall' component={BookHallPage} />
+                    <Redirect to='/home' />
+                  </Switch>
+                </AuthRoute>
+                <Redirect to='/home' />
+              </Switch>
+            )}
           </Container>
         </FirebaseStorageProvider>
       </FirestoreProvider>

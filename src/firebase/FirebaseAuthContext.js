@@ -1,18 +1,26 @@
-import * as React from 'react'
+import { useEffect, useRef, useState, useContext, createContext } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
-const FirebaseAuthContext = React.createContext(undefined)
+const FirebaseAuthContext = createContext(undefined)
 
-const FirebaseAuthProvider = ({ children }) => {
-  const [user, setUser] = React.useState(null)
+const FirebaseAuthProvider = ({ children, setLoading }) => {
+  const [user, setUser] = useState()
   const value = { user }
+  const isInitialMount = useRef(true)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const auth = getAuth()
     const unsubscribe = onAuthStateChanged(auth, setUser)
     return unsubscribe
   }, [])
 
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+    } else {
+      setLoading(false)
+    }
+  }, [user, setLoading])
   return (
     <FirebaseAuthContext.Provider value={value}>
       {children}
@@ -21,7 +29,7 @@ const FirebaseAuthProvider = ({ children }) => {
 }
 
 function useFirebaseAuth() {
-  const context = React.useContext(FirebaseAuthContext)
+  const context = useContext(FirebaseAuthContext)
   if (context === undefined) {
     throw new Error(
       'useFirebaseAuth must be used within a FirebaseAuthProvider'

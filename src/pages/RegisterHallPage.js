@@ -87,7 +87,7 @@ function SignUpSafeSpaceProviderPage() {
   }
   const [dawamListSize, setDawamListSize] = useState(0)
   const [other, setOther] = useState('')
-  var rows = []
+  let rows = []
   for (let i = 0; i < dawamListSize; i++) {
     // note: we are adding a key prop here to allow react to uniquely identify each
     // element in this array. see: https://reactjs.org/docs/lists-and-keys.html

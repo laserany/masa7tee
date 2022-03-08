@@ -1,15 +1,16 @@
 import React from 'react'
 import CardGroup from 'react-bootstrap/CardGroup'
 import Card from 'react-bootstrap/Card'
-import Masa7teeButton from '../components/common/Masa7teeButton'
 import HallsSearchFilter from '../components/halls/HallsSearchFilter'
 import { arabicTextStyling } from '../components/common/constants'
 import { array_chunks } from '../components/common/utils'
 import { useState } from 'react'
 import { collection, getDocs, query } from 'firebase/firestore'
 import { useFirestore } from '../firebase/FirestoreContext'
+import { useHistory } from 'react-router-dom'
 const BookHallPage = () => {
   const db = useFirestore()
+  const history = useHistory()
   const [location, setLocation] = useState()
   const [capacity, setCapacity] = useState()
   const [name, setName] = useState()
@@ -20,7 +21,9 @@ const BookHallPage = () => {
       const q = query(collection(db, 'halls'))
       const allHallsDocs = await getDocs(q)
       let temp = []
-      allHallsDocs.forEach((doc) => temp.push(doc.data()))
+      allHallsDocs.forEach((doc) =>
+        temp.push(Object.assign(doc.data(), { id: doc.id }))
+      )
       setAllHalls([...temp])
     }
     fetchHalls()
@@ -64,17 +67,17 @@ const BookHallPage = () => {
         let hallSpec = filteredHallsSpec[i]
         cards.push(
           <Card key={i}>
-            <Card.Img variant='top' src={hallSpec.photoUrl} />
+            <Card.Img
+              variant='top'
+              src={hallSpec.photoUrl}
+              onClick={() => history.push(`/book-hall/${hallSpec.id}`)}
+              style={{ cursor: 'pointer' }}
+            />
             <Card.Body>
               <Card.Title>قاعة {hallSpec.name}</Card.Title>
-              <Card.Text>السعر: 10 دينار أردني</Card.Text>
               <Card.Text>المحافظة: {hallSpec.location}</Card.Text>
               <Card.Text>السعة: {hallSpec.capacity} شخص</Card.Text>
-              <Masa7teeButton>احجز</Masa7teeButton>
             </Card.Body>
-            <Card.Footer>
-              <small className='text-muted'>Last updated 55 mins ago</small>
-            </Card.Footer>
           </Card>
         )
       }
@@ -85,7 +88,7 @@ const BookHallPage = () => {
         )
       }
     }
-  }, [allHalls, capacity, location, name])
+  }, [allHalls, capacity, location, name, history])
 
   return (
     <div style={arabicTextStyling}>

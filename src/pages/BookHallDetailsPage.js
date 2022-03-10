@@ -6,6 +6,7 @@ import Table from 'react-bootstrap/Table'
 import CenteredTableHead from '../components/common/CenteredTableHead'
 import Masa7teeButton from '../components/common/Masa7teeButton'
 import { Link } from 'react-router-dom'
+import CenteredTableData from '../components/common/CenteredTableData'
 
 const BookHallDetailsPage = () => {
   const db = useFirestore()
@@ -20,19 +21,24 @@ const BookHallDetailsPage = () => {
       for (let i = 0; i < dawamList.length; i++) {
         // note: we are adding a key prop here to allow react to uniquely identify each
         // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
+        const disabled =
+          dawamList[i].availability === 'فراغ' &&
+          dawamList[i].reservationCapability === 'حجز'
         setDawamRows((dawamRows) =>
           dawamRows.concat(
             <tr key={i}>
-              <td>
+              <CenteredTableData>
                 <Link to='/home'>
-                  <Masa7teeButton>احجز</Masa7teeButton>
+                  <Masa7teeButton disabled={!disabled}>احجز</Masa7teeButton>
                 </Link>
-              </td>
-              <td>{dawamList[i].price}</td>
-              <td>{dawamList[i].reservationCapability}</td>
-              <td>{dawamList[i].availability}</td>
-              <td>{dawamList[i].time}</td>
-              <td>{dawamList[i].date}</td>
+              </CenteredTableData>
+              <CenteredTableData>{dawamList[i].price}</CenteredTableData>
+              <CenteredTableData>
+                {dawamList[i].reservationCapability}
+              </CenteredTableData>
+              <CenteredTableData>{dawamList[i].availability}</CenteredTableData>
+              <CenteredTableData>{dawamList[i].time}</CenteredTableData>
+              <CenteredTableData>{dawamList[i].date}</CenteredTableData>
             </tr>
           )
         )

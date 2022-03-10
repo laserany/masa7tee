@@ -92,8 +92,8 @@ function RegisterHallPage() {
   const [other, setOther] = useState('')
   let rows = []
   for (let i = 0; i < dawamListSize; i++) {
-    // note: we are adding a key prop here to allow react to uniquely identify each
-    // element in this array. see: https://reactjs.org/docs/lists-and-keys.html
+    dawamList[i].reservationCapability = 'حجز'
+    dawamList[i].availability = 'فراغ'
     rows.push(
       <tr key={i}>
         <td
@@ -102,21 +102,29 @@ function RegisterHallPage() {
             (dawamList[i].price = e.target.innerText.slice(0, -1))
           }
         ></td>
-        <td
-          contentEditable
-          onKeyUp={(e) =>
-            (dawamList[i].reservationCapability = e.target.innerText.slice(
-              0,
-              -1
-            ))
-          }
-        ></td>
-        <td
-          contentEditable
-          onKeyUp={(e) =>
-            (dawamList[i].availability = e.target.innerText).slice(0, -1)
-          }
-        ></td>
+        <td>
+          <Form.Control
+            as='select'
+            id='reservationCapability'
+            onChange={(e) =>
+              (dawamList[i].reservationCapability = e.target.value)
+            }
+          >
+            <option>حجز</option>
+            <option>عدم حجز</option>
+          </Form.Control>
+        </td>
+        <td>
+          {' '}
+          <Form.Control
+            as='select'
+            id='availability'
+            onChange={(e) => (dawamList[i].availability = e.target.value)}
+          >
+            <option>فراغ</option>
+            <option>عدم فراغ</option>
+          </Form.Control>
+        </td>
         <td
           contentEditable
           onKeyUp={(e) => (dawamList[i].time = e.target.innerText).slice(0, -1)}

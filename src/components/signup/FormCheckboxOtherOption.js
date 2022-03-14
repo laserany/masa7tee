@@ -5,9 +5,11 @@ import { otherInputStyling } from '../common/constants'
 const FormCheckboxOtherOption = ({
   name,
   value,
+  defaultChecked,
   onChange,
   onBlur,
   setOther,
+  initialOtherValue,
   isValid,
   isInvalid,
   error,
@@ -18,6 +20,7 @@ const FormCheckboxOtherOption = ({
         type='checkbox'
         name={name}
         value='checkbox_other'
+        defaultChecked={defaultChecked}
         onChange={onChange}
         onBlur={onBlur}
         bsPrefix
@@ -30,7 +33,7 @@ const FormCheckboxOtherOption = ({
         style={otherInputStyling}
         type='text'
         name='checkbox_other'
-        value={value}
+        value={initialOtherValue}
         onChange={(e) => {
           setOther(e.target.value)
           onChange(e)

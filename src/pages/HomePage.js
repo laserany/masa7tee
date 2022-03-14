@@ -23,7 +23,7 @@ const HomePage = ({ match }) => {
   const isLaptop = useMediaQuery({ query: '(min-width: 768px)' })
   const imageWidth = isLaptop ? '80%' : '115%'
   const user = useFirebaseAuth()
-  let signedButton, bookHallButton, registerHallButton
+  let signedButton, bookHallButton, registerHallButton, editHallButton
   if (!user) {
     signedButton = (
       <Link to='/sign-in'>
@@ -52,6 +52,13 @@ const HomePage = ({ match }) => {
         <Link to='/register-hall'>
           <Masa7teeButton className='btn btn-primary mr-2 mb-2' width='100px'>
             Register Hall
+          </Masa7teeButton>
+        </Link>
+      )
+      editHallButton = (
+        <Link to='/edit-hall'>
+          <Masa7teeButton className='btn btn-primary mr-2 mb-2' width='100px'>
+            Edit Hall
           </Masa7teeButton>
         </Link>
       )
@@ -94,6 +101,7 @@ background-color: ${masa7teeColor} !important;
             </Link>
             {bookHallButton}
             {registerHallButton}
+            {editHallButton}
           </div>
         </Col>
         <Col md={1} className='mt-5'>

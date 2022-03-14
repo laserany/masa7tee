@@ -16,6 +16,8 @@ import AuthRoute from './routes/AuthRoute'
 import { FirebaseStorageProvider } from './firebase/FirebaseStorageContext'
 import { useState } from 'react'
 import BookHallDetailsPage from './pages/BookHallDetailsPage'
+import EditHallPage from './pages/EditHallPage'
+import EditHallDetailsPage from './pages/EditHallDetailsPage'
 
 function App() {
   const firebaseConfig = {
@@ -54,6 +56,11 @@ function App() {
                       component={BookHallDetailsPage}
                     />
                     <Route path='/book-hall' component={BookHallPage} />
+                    <Route
+                      path='/edit-hall/:id'
+                      component={EditHallDetailsPage}
+                    />
+                    <Route path='/edit-hall' component={EditHallPage} />
                     <Redirect to='/home' />
                   </Switch>
                 </AuthRoute>

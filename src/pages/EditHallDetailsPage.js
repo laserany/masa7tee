@@ -15,7 +15,7 @@ import { getAuth } from 'firebase/auth'
 import { collection, addDoc, doc, getDoc } from 'firebase/firestore'
 import { useFirestore } from '../firebase/FirestoreContext'
 import { useHistory } from 'react-router-dom'
-import { ref, uploadBytes, listAll } from 'firebase/storage'
+import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage'
 import { useFirebaseStorage } from '../firebase/FirebaseStorageContext'
 import FormSelectBox from '../components/signup/FormSelectBox'
 import { useFirebaseAuth } from '../firebase/FirebaseAuthContext'
@@ -63,10 +63,18 @@ function EditHallDetailsPage() {
     async function fetchHallDetails() {
       const hallRef = doc(db, 'halls', id)
       const hallSnap = await getDoc(hallRef)
-      setInitialHallData(hallSnap.data())
+      const storageRef = ref(storage, `hallImages/${hallSnap.data().name}`)
+      const photoDownloadUrl = await getDownloadURL(storageRef)
+      const response = await fetch(photoDownloadUrl)
+      const blob = await response.blob()
+      const file = new File([blob], hallSnap.data().name, {
+        type: blob.type,
+      })
+
+      setInitialHallData({ ...hallSnap.data(), file: [file] })
     }
     fetchHallDetails()
-  }, [db, id])
+  }, [db, id, storage])
 
   let onSubmit = async (data, { setErrors }) => {
     const storageItemsList = await listAll(ref(storage))
@@ -280,6 +288,7 @@ function EditHallDetailsPage() {
                   <FormFileBox
                     label='صورة القاعة'
                     name='picture'
+                    file={initialHallData.file}
                     setFieldValue={setFieldValue}
                     onBlur={handleBlur}
                     isValid={touched.picture && !errors.picture}

@@ -5,14 +5,17 @@ import Masa7teeButton from '../common/Masa7teeButton'
 const FormFileBox = ({
   label,
   name,
+  file,
   onBlur,
   isValid,
   isInvalid,
   setFieldValue,
   error,
 }) => {
-  const [fileName, setFileName] = useState('Upload Picture')
-  const inputRef = useRef()
+  const [fileName, setFileName] = useState(
+    file ? file[0].name : 'Upload Picture'
+  )
+  const inputRef = useRef(file)
   const handleUpload = () => {
     inputRef.current.click()
   }

@@ -68,7 +68,9 @@ function SignUpPersonPage() {
     } catch (e) {
       console.error('Error adding document: ', e)
     }
-    await sendEmailVerification(auth.currentUser)
+    await sendEmailVerification(auth.currentUser, {
+      url: 'http://localhost:3000/sign-in',
+    })
     await updateProfile(auth.currentUser, {
       displayName: 'Person',
     })

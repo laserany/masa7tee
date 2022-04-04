@@ -74,7 +74,9 @@ function SignUpInstitutionPage() {
     } catch (e) {
       console.error('Error adding document: ', e)
     }
-    await sendEmailVerification(auth.currentUser)
+    await sendEmailVerification(auth.currentUser, {
+      url: 'https://masa7tee.web.app/sign-in',
+    })
     await updateProfile(auth.currentUser, {
       displayName: 'Institution',
     })

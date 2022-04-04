@@ -69,7 +69,7 @@ function SignUpPersonPage() {
       console.error('Error adding document: ', e)
     }
     await sendEmailVerification(auth.currentUser, {
-      url: 'http://localhost:3000/sign-in',
+      url: 'https://masa7tee.web.app/sign-in',
     })
     await updateProfile(auth.currentUser, {
       displayName: 'Person',

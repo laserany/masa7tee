@@ -98,9 +98,7 @@ function RegisterHallPage() {
       <tr key={i}>
         <td
           contentEditable
-          onKeyUp={(e) =>
-            (dawamList[i].price = e.target.innerText.slice(0, -1))
-          }
+          onKeyUp={(e) => (dawamList[i].price = e.target.innerText.trim())}
         ></td>
         <td>
           <Form.Control
@@ -127,11 +125,11 @@ function RegisterHallPage() {
         </td>
         <td
           contentEditable
-          onKeyUp={(e) => (dawamList[i].time = e.target.innerText).slice(0, -1)}
+          onKeyUp={(e) => (dawamList[i].time = e.target.innerText).trim()}
         ></td>
         <td
           contentEditable
-          onKeyUp={(e) => (dawamList[i].date = e.target.innerText).slice(0, -1)}
+          onKeyUp={(e) => (dawamList[i].date = e.target.innerText).trim()}
         ></td>
       </tr>
     )

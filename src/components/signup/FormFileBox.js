@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Form from 'react-bootstrap/Form'
 import Masa7teeButton from '../common/Masa7teeButton'
 
@@ -22,6 +22,13 @@ const FormFileBox = ({
   const handleDisplayFileDetails = () => {
     inputRef.current.files && setFileName(inputRef.current.files[0].name)
   }
+
+  useEffect(() => {
+    if (file) {
+      setFieldValue('picture', file[0])
+    }
+  }, [file, setFieldValue])
+
   return (
     <>
       <Form.Label>{label}</Form.Label>
@@ -42,11 +49,7 @@ const FormFileBox = ({
         isValid={isValid}
         isInvalid={isInvalid}
       />
-      <Masa7teeButton
-        as='button'
-        onClick={handleUpload}
-        style={{ marginLeft: '10px' }}
-      >
+      <Masa7teeButton onClick={handleUpload} style={{ marginLeft: '10px' }}>
         {fileName ? fileName : 'Upload Picture'}
       </Masa7teeButton>
       <Form.Control.Feedback>Looks good!</Form.Control.Feedback>

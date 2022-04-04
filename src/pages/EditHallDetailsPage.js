@@ -12,10 +12,10 @@ import Table from 'react-bootstrap/Table'
 import CenteredTableHead from '../components/common/CenteredTableHead'
 import Masa7teeButton from '../components/common/Masa7teeButton'
 import { getAuth } from 'firebase/auth'
-import { collection, addDoc, doc, getDoc } from 'firebase/firestore'
+import { updateDoc, doc, getDoc } from 'firebase/firestore'
 import { useFirestore } from '../firebase/FirestoreContext'
 import { useHistory } from 'react-router-dom'
-import { ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useFirebaseStorage } from '../firebase/FirebaseStorageContext'
 import FormSelectBox from '../components/signup/FormSelectBox'
 import { useFirebaseAuth } from '../firebase/FirebaseAuthContext'
@@ -24,7 +24,6 @@ import { useParams } from 'react-router-dom'
 
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/gif', 'image/png']
 const checkboxOptionsArray = ['تدفئة', 'شاشة', 'قرطاسية', 'Coffee break']
-let dawamList = []
 
 function EditHallDetailsPage() {
   const user = useFirebaseAuth()
@@ -59,6 +58,11 @@ function EditHallDetailsPage() {
   const { id } = useParams()
   const storage = useFirebaseStorage()
 
+  const [other, setOther] = useState('')
+  const [initialHallData, setInitialHallData] = useState()
+  const [rows, setRows] = useState([])
+  const [dawamList, setDawamList] = useState([])
+
   useEffect(() => {
     async function fetchHallDetails() {
       const hallRef = doc(db, 'halls', id)
@@ -76,21 +80,106 @@ function EditHallDetailsPage() {
     fetchHallDetails()
   }, [db, id, storage])
 
-  let onSubmit = async (data, { setErrors }) => {
-    const storageItemsList = await listAll(ref(storage))
-    if (
-      storageItemsList.items.some((e) => e._location.path_ === data.hallName)
-    ) {
-      setErrors({
-        hallName: 'This hall is already registered.',
-      })
-      return
+  useEffect(() => {
+    if (initialHallData) {
+      setDawamList(initialHallData.dawamList)
+      for (let i = 0; i < initialHallData.dawamList.length; i++) {
+        setRows((rows) =>
+          rows.concat(
+            <tr key={i}>
+              <td
+                contentEditable
+                onKeyUp={(e) =>
+                  (initialHallData.dawamList[i].price =
+                    e.target.innerText.trim())
+                }
+              >
+                {initialHallData.dawamList[i].price.trim()}
+              </td>
+              <td>
+                <Form.Control
+                  as='select'
+                  id='reservationCapability'
+                  onChange={(e) =>
+                    (initialHallData.dawamList[i].reservationCapability =
+                      e.target.value)
+                  }
+                >
+                  <option
+                    selected={
+                      initialHallData.dawamList[i].reservationCapability ===
+                      'حجز'
+                    }
+                  >
+                    حجز
+                  </option>
+                  <option
+                    selected={
+                      initialHallData.dawamList[i].reservationCapability ===
+                      'عدم حجز'
+                    }
+                  >
+                    عدم حجز
+                  </option>
+                </Form.Control>
+              </td>
+              <td>
+                {' '}
+                <Form.Control
+                  as='select'
+                  id='availability'
+                  onChange={(e) =>
+                    (initialHallData.dawamList[i].availability = e.target.value)
+                  }
+                >
+                  <option
+                    selected={
+                      initialHallData.dawamList[i].reservationCapability ===
+                      'فراغ'
+                    }
+                  >
+                    فراغ
+                  </option>
+                  <option
+                    selected={
+                      initialHallData.dawamList[i].reservationCapability ===
+                      'عدم فراغ'
+                    }
+                  >
+                    عدم فراغ
+                  </option>
+                </Form.Control>
+              </td>
+              <td
+                contentEditable
+                onKeyUp={(e) =>
+                  (initialHallData.dawamList[i].time =
+                    e.target.innerText.trim())
+                }
+              >
+                {initialHallData.dawamList[i].time.trim()}
+              </td>
+              <td
+                contentEditable
+                onKeyUp={(e) =>
+                  (initialHallData.dawamList[i].date =
+                    e.target.innerText.trim())
+                }
+              >
+                {initialHallData.dawamList[i].date.trim()}
+              </td>
+            </tr>
+          )
+        )
+      }
     }
+  }, [initialHallData])
 
+  let onSubmit = async (data, { setErrors }) => {
     const storageRef = ref(storage, `hallImages/${data.hallName}`)
     await uploadBytes(storageRef, data.picture)
     try {
-      await addDoc(collection(db, 'halls'), {
+      await updateDoc(doc(db, 'halls', id), {
         institutionID: auth.currentUser.uid,
         name: data.hallName,
         capacity: data.capacity,
@@ -107,56 +196,6 @@ function EditHallDetailsPage() {
       console.error('Error adding document: ', e)
     }
     history.push('/home')
-  }
-  const [dawamListSize, setDawamListSize] = useState(0)
-  const [other, setOther] = useState('')
-  const [initialHallData, setInitialHallData] = useState()
-
-  let rows = []
-  for (let i = 0; i < dawamListSize; i++) {
-    dawamList[i].reservationCapability = 'حجز'
-    dawamList[i].availability = 'فراغ'
-    rows.push(
-      <tr key={i}>
-        <td
-          contentEditable
-          onKeyUp={(e) =>
-            (dawamList[i].price = e.target.innerText.slice(0, -1))
-          }
-        ></td>
-        <td>
-          <Form.Control
-            as='select'
-            id='reservationCapability'
-            onChange={(e) =>
-              (dawamList[i].reservationCapability = e.target.value)
-            }
-          >
-            <option>حجز</option>
-            <option>عدم حجز</option>
-          </Form.Control>
-        </td>
-        <td>
-          {' '}
-          <Form.Control
-            as='select'
-            id='availability'
-            onChange={(e) => (dawamList[i].availability = e.target.value)}
-          >
-            <option>فراغ</option>
-            <option>عدم فراغ</option>
-          </Form.Control>
-        </td>
-        <td
-          contentEditable
-          onKeyUp={(e) => (dawamList[i].time = e.target.innerText).slice(0, -1)}
-        ></td>
-        <td
-          contentEditable
-          onKeyUp={(e) => (dawamList[i].date = e.target.innerText).slice(0, -1)}
-        ></td>
-      </tr>
-    )
   }
 
   if (user.displayName === 'Institution') {
@@ -318,16 +357,81 @@ function EditHallDetailsPage() {
               <Form.Row>
                 <Masa7teeButton
                   onClick={() => {
-                    dawamList.push({})
-                    setDawamListSize(dawamListSize + 1)
+                    setDawamList((dawamList) => dawamList.concat({}))
+                    let i = rows.length
+                    setRows((rows) =>
+                      rows.concat(
+                        <tr key={i}>
+                          <td
+                            contentEditable
+                            onKeyUp={(e) =>
+                              setDawamList((dawamList) => {
+                                dawamList[i].price = e.target.innerText.trim()
+                                return dawamList
+                              })
+                            }
+                          ></td>
+                          <td>
+                            <Form.Control
+                              as='select'
+                              id='reservationCapability'
+                              onChange={(e) =>
+                                setDawamList((dawamList) => {
+                                  dawamList[i].reservationCapability =
+                                    e.target.value
+                                  return dawamList
+                                })
+                              }
+                            >
+                              <option>حجز</option>
+                              <option>عدم حجز</option>
+                            </Form.Control>
+                          </td>
+                          <td>
+                            {' '}
+                            <Form.Control
+                              as='select'
+                              id='availability'
+                              onChange={(e) =>
+                                setDawamList((dawamList) => {
+                                  dawamList[i].availability = e.target.value
+                                  return dawamList
+                                })
+                              }
+                            >
+                              <option>فراغ</option>
+                              <option>عدم فراغ</option>
+                            </Form.Control>
+                          </td>
+                          <td
+                            contentEditable
+                            onKeyUp={(e) =>
+                              setDawamList((dawamList) => {
+                                dawamList[i].time = e.target.innerText.trim()
+                                return dawamList
+                              })
+                            }
+                          ></td>
+                          <td
+                            contentEditable
+                            onKeyUp={(e) =>
+                              setDawamList((dawamList) => {
+                                dawamList[i].date = e.target.innerText.trim()
+                                return dawamList
+                              })
+                            }
+                          ></td>
+                        </tr>
+                      )
+                    )
                   }}
                 >
                   Add Row
                 </Masa7teeButton>
                 <Masa7teeButton
                   onClick={() => {
-                    dawamList.pop()
-                    setDawamListSize(dawamListSize - 1)
+                    setDawamList((dawamList) => dawamList.slice(0, -1))
+                    setRows((rows) => rows.slice(0, -1))
                   }}
                   style={{ marginLeft: '10px' }}
                 >
